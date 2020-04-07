@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+	<title>线性回归</title>
+	<!-- Meta tag Keywords -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8" />
+	<meta name="keywords" content="" />
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+		function hideURLbar() {
+			//window.scrollTo(0, 1);
+		}
+		//全局变量
+		window.qk = 3.57;
+		window.qb = 300;
+		window.bo = false;
+		window.k = 3.57;
+		window.b = 300;
+		window.o = false;
+		window.a = 0.01;
+		window.x = -3;
+		window.oo = true;
+		//滑条样式
+		$.fn.RangeSlider = function(cfg){
+			this.sliderCfg = {
+				min: cfg && !isNaN(parseFloat(cfg.min)) ? Number(cfg.min) : null, 
+				max: cfg && !isNaN(parseFloat(cfg.max)) ? Number(cfg.max) : null,
+				step: cfg && Number(cfg.step) ? cfg.step : 1,
+				callback: cfg && cfg.callback ? cfg.callback : null
+			};
+			var $input = $(this);
+			var min = this.sliderCfg.min;
+			var max = this.sliderCfg.max;
+			var step = this.sliderCfg.step;
+			var callback = this.sliderCfg.callback;
+			$input.attr('min', min)
+			.attr('max', max)
+			.attr('step', step);
+
+			$input.bind("input", function(e){
+				$input.attr('value', this.value);
+				$input.css( 'background', 'linear-gradient(to right, #059CFA, white ' + this.value + '%, white)' );
+				if ($.isFunction(callback)) {
+					callback(this);
+				}
+			});
+		};
+	</script>
+	<!-- //Meta tag Keywords -->
+	<link rel="icon" href="images/logo-f.png" sizes="64x64">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<style type="text/css">
+		input[type=range] {
+			-webkit-appearance: none;
+			width: 300px;
+			//border-radius: 10px; /*这个属性设置使填充进度条时的图形为圆角*/
+		}
+		input[type=range]:focus {
+			outline: none;
+		}
+		input[type=range]::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			height: 25px;
+			width: 25px;
+			margin-top: -5px; /*使滑块超出轨道部分的偏移量相等*/
+			background: #ffffff; 
+			border-radius: 50%; /*外观设置为圆形*/
+			border: solid 0.125em rgba(205, 224, 230, 0.5); /*设置边框*/
+			box-shadow: 0 .125em .125em #3b4547; /*添加底部阴影*/
+		}
+		table
+		{
+			border-collapse: collapse;
+			margin: 0 auto;
+			width: 80%;
+			text-align: center;
+		}
+		table td, table th
+		{
+			border: 1px solid #cad9ea;
+			color: #666;
+			height: 30px;
+		}
+		table thead th
+		{
+			background-color: #CCE8EB;
+			width: 100px;
+		}
+		table tr:nth-child(odd)
+		{
+			background: #fff;
+		}
+		table tr:nth-child(even)
+		{
+			background: #F5FAFA;
+		}
+	</style>
+
+	<!-- Web-Fonts -->
+	<link href="http://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext"
+	rel="stylesheet">
+	<!-- //Web-Fonts -->
+</head>
+
+<body>
+	<!-- main banner -->
+	<div class="main-top" id="home">
+		<!-- header -->
+		<header>
+			<div class="container-fix">
+				<div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
+					<!-- logo -->
+					<div id="logo">
+						<h1><a href="index.html"><img src="images/logo.png" alt="" class="img-fluid" />云旗</a></h1>
+					</div>
+					<!-- //logo -->
+					<!-- nav -->
+					<div class="nav_w3ls">
+						<nav>
+							<label for="drop" class="toggle">菜单</label>
+							<input type="checkbox" id="drop" />
+							<ul class="menu">
+								<li><a href="index.html">主页</a></li>
+								<li><a href="about.html">关于我们</a></li>
+								<li><a href="pricing.html">空白</a></li>
+								<li>
+									<!-- First Tier Drop Down -->
+									<label for="drop-2" class="toggle toogle-2">导航 <span class="fa fa-angle-down" aria-hidden="true"></span>
+									</label>
+									<a href="#" class="active"><strong>导航 </strong><span class="fa fa-angle-down" aria-hidden="true"></span></a>
+									<input type="checkbox" id="drop-2" />
+									<ul>
+										<li><a href="slr.html" class="drop-text">线性回归</a></li>
+										<li><a href="knn.html" class="drop-text">K近邻算法</a></li>
+										<li><a href="faq.html" class="drop-text">常见问题</a></li>
+										<li><a href="about.html#partners" class="drop-text">合作伙伴</a></li>
+										<li><a href="about.html" class="drop-text">我们的团队</a></li>
+									</ul>
+								</li>
+								<li><a href="contact.html">联系我们</a></li>
+							</ul>
+						</nav>
+					</div>
+					<!-- //nav -->
+					<div class="d-flex mt-lg-1 mt-sm-2 mt-3 justify-content-center">
+						<!-- 搜索 -->
+						<div class="search-w3layouts mr-3">
+							<form action="#" method="post" class="search-bottom-wthree d-flex">
+								<input class="search" type="search" placeholder="站内搜索..." required="">
+								<button class="form-control btn" type="submit"><span class="fa fa-search"></span></button>
+							</form>
+						</div>
+						<!-- //搜索 -->
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- //header -->
+
+		<!-- banner -->
+		<div class="banner_w3lspvt-2">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="index.html">主页</a></li>
+				<li class="breadcrumb-item" aria-current="page">线性回归</li>
+			</ol>
+		</div>
+		<!-- //banner -->
+	</div>
+	<!-- //main banner -->
+	
+	<!-- 主要内容 -->
+	<div>
+		<h3 style="font-size:4rem;font-weight:600;color:#202428;text-align:center;">线性回归</h3>
+		<div class="container">
+			<h5 style="margin-top:2em">前言</h5>
+			<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">&emsp;&emsp;
+				这是机器学习算法可视化系列的第一篇文章，主要介绍基础的线性回归模型。</p>
+				<h5 style="margin-top:2em">一、算法简介</h5>
+				<h6 style="margin-top:2em">&emsp;（一）回归模型</h6>
+				<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
+					&emsp;&emsp;回归是监督学习的一个重要问题，用于预测输入变量和输出变量之间的关系。
+					回归模型即是表示从输入变量到输出变量之间映射的函数。通常使用曲线/直线来拟合数据点，目标是<u>使曲线到数据点的距离差异最小</u>。
+				</p>
+				<h6>&emsp;（二）线性回归</h6>
+				<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
+					&emsp;&emsp;本文介绍的线性回归则是回归模型中最基础的一种，线性回归假设目标值与特征之间满足线性相关。
+					通过构建损失函数，求解损失函数最小时的θ1和θ0,从而得到回归直线：<br />
+				</p><h4 style="text-align:center;"><em>y’=θ1*x+θ0</em></h4>
+				<h6>&emsp;（三）损失函数</h6>
+				<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
+					&emsp;&emsp;求解最佳参数，需要一个标准来对结果进行衡量，为此我们需要定量化一个目标函数式，使得计算机可以在求解过程中不断地优化。
+					对于任何一对参数，我们都可以求出一条直线，并将x代入直线方程得到一个预测值y’。损失函数应该能够反映出预测值y’和实际值y之间的差异程度。<br />
+					&emsp;&emsp;回归问题中，一般采用平方损失函数，定义如下：<br />
+					<img src="movies/ss1.png" style="height:17%; width:17%;margin-left:40%;" /><br />
+					&emsp;&emsp;将y’=θ1*x+θ0代入可以得到
+					<img src="movies/ss2.png" style="height:20%; width:20%;" /><br />
+					此时求解最优直线参数的问题转化为了使损失函数J(θ0，θ1)的值最小的最优化问题。
+				</p>
+				<h5 style="margin-top:2em">二、实例分析</h5>
+				<p class="text-sty-banner">&emsp;&emsp;下表记录的是某试验田施化肥量和水稻产量的数据。</p>
+				<table width="80%" class="table">
+					<caption style="caption-side:top;text-align:center;">水稻产量与施化肥量的关系</caption>
+					<tr>
+						<th>施化肥量x</th>	
+						<td>15</td>
+						<td>20</td>
+						<td>25</td>
+						<td>30</td>
+						<td>35</td>
+						<td>40</td>
+						<td>45</td>
+					</tr>
+					<tr>
+						<th>水稻产量y</th>
+						<td>330</td>
+						<td>345</td>
+						<td>365</td>
+						<td>405</td>
+						<td>445</td>
+						<td>450</td>
+						<td>455</td>	
+					</tr>
+				</table>
+				<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
+					&emsp;&emsp;假设施化肥量和水稻的产量是接近线性相关的，于是我们可以认为，预计水稻产量y’和施化肥量x之间满足方程：y’=θ1*x+θ0
+					<br />在θ1和θ0不确定的情况下，有无数条直线。
+				</p>
+			</div>
+			<div class="container row" id="dw">
+				<!-- 坐标系区域 -->
+				<div style="margin-left:22em;max-width:200px;">
+					<canvas id="canvas" class="canvas" style="background:url(movies/zbz.png)">你的浏览器不支持canvas</canvas>
+					<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+					<script type="text/javascript">
+						function init()
+						{
+							var canvas = document.getElementById('canvas');
+							canvas.width = 800;
+							canvas.height = 800;
+							var ctx = canvas.getContext('2d');
+							ctx.beginPath();
+							ctx.arc(173,551,2,0,2*Math.PI);
+							ctx.stroke();
+							ctx.beginPath();
+							ctx.arc(249,496,2,0,2*Math.PI);
+							ctx.stroke();
+							ctx.beginPath();
+							ctx.arc(325,420,2,0,2*Math.PI);
+							ctx.stroke();
+							ctx.beginPath();
+							ctx.arc(400,268,2,0,2*Math.PI);
+							ctx.stroke();
+							ctx.beginPath();
+							ctx.arc(476,116,2,0,2*Math.PI);
+							ctx.stroke();
+							ctx.beginPath();
+							ctx.arc(551,98,2,0,2*Math.PI);
+							ctx.stroke();
+							ctx.beginPath();
+							ctx.arc(627,79,2,0,2*Math.PI);
+							ctx.stroke();
+							var png = new Image();
+							png.src = './movies/zbz.png';
+							png.onload = function(){
+								ctx.drawImage(png,0,0);
+							}
+							ctx.beginPath();
+							ctx.moveTo(59,667);
+							ctx.lineTo(629,59);
+							ctx.strokeStyle = 'blue';
+							ctx.stroke();
+						}
+						function update(k,b)
+						{
+							var canvas = document.getElementById('canvas');
+							canvas.width = 800;
+							canvas.height = 800;
+							var ctx = canvas.getContext('2d');
+							ctx.strokeStyle = 'black';
+							ctx.beginPath();
+							ctx.arc(173,551,2,0,2*Math.PI);
+							ctx.stroke();
+							ctx.beginPath();
+							ctx.arc(249,496,2,0,2*Math.PI);
+							ctx.stroke();
+							ctx.beginPath();
+							ctx.arc(325,420,2,0,2*Math.PI);
+							ctx.stroke();
+							ctx.beginPath();
+							ctx.arc(400,268,2,0,2*Math.PI);
+							ctx.stroke();
+							ctx.beginPath();
+							ctx.arc(476,116,2,0,2*Math.PI);
+							ctx.stroke();
+							ctx.beginPath();
+							ctx.arc(551,98,2,0,2*Math.PI);
+							ctx.stroke();
+							ctx.beginPath();
+							ctx.arc(627,79,2,0,2*Math.PI);
+							ctx.stroke();
+							var img = new Image();
+							img.src = './movies/zbz.png';
+							img.onload = function(){
+								ctx.drawImage(img,0,0);
+							}
+							var bchange=97+(450-b)/10*38;
+							var kchange=173+(((460-b)/k-15)/5)*76;
+							ctx.strokeStyle = 'red';
+							ctx.beginPath();
+							ctx.moveTo(59,bchange);
+							ctx.lineTo(kchange,59);
+							ctx.stroke();
+						}
+						function clickButton(){ 
+							var k = document.getElementById("k").value
+							var b = document.getElementById("b").value;
+							k = Number(k);
+							b = Number(b);
+							window.qk = k;
+							window.qb = b;
+							window.bo = true;
+							update(k,b);
+						}
+						function clickReset(){
+							window.bo = false;
+							init();
+							$("#k").val("");
+							$("#b").val("");
+						}
+						if (!window.bo) {
+					init();//范例_蓝
+				} else {
+					update(window.qk,window.qb);
+				}
+				//滑条变量
+				function kchange() {
+					var vk = document.getElementById("krange").value;
+  					//document.getElementById('k').innerHTML = value;
+  					window.qk = vk;
+  					$("#k").val(vk);
+  					update(vk,window.qb);
+  				}
+  				function bchange() {
+  					var vb = document.getElementById("brange").value;
+  					//document.getElementById('b').innerHTML = value;
+  					window.qb = vb;
+  					$("#b").val(vb);
+  					update(window.qk,vb);
+  				}
+  			</script>
+  		</div>
+  		<!-- 输入区域 -->
+  		<div style="float:left;position:relative;left:80%;">
+  			<div style="position:relative;left:-80%;margin-top:10em;">
+  				<div class="from-group row">
+  					<label>斜率θ1</label>
+  					<input class="form-control" id="k" type="text" placeholder="3.57" name="k" required="请输入一个数字">
+  				</div>
+  				<div class="from-group row" style="position:relative;"><br /><br />
+  					<div style="opacity:0.4;position:absolute;left:0px; top:17px;z-index:1;">
+  						<input id="krange" type="range" min="0" max="10" step="0.1" value="3.57" oninput="kchange()" onpropertychange="kchange()">
+  					</div>
+  					<div style="position:absolute;left:0px; top:10px;z-index:-1;"><img src="images/range_bg.png" height="30px" width="100%" /></div>
+  				</div>
+  				<br /><br />
+  				<div class="from-group row">
+  					<label>截距θ0</label>
+  					<input class="form-control" id="b" type="text" placeholder="300" name="b" required="请输入一个数字">
+  				</div>
+  				
+  				<div class="from-group row" style="position:relative;"><br /><br />
+  					<div style="opacity:0.4;position:absolute;left:0px; top:17px;z-index:1;">
+  						<input id="brange" type="range" min="280" max="430" step="1" value="300" oninput="bchange()" onpropertychange="bchange()">
+  					</div>
+  					<div style="position:absolute;left:0px; top:10px;z-index:-1;"><img src="images/range_bg.png" height="30px" width="100%" /></div>
+  				</div>
+  				<br /><br />
+  				<div class="row mt-3">
+  					<div class="col-md-12">
+  						<button class="btn btn-cont-w3 btn-block mt-4" onclick="clickButton()">绘制图线</button>
+  					</div>
+  					<div class="col-md-12">
+  						<button type="reset" class="btn btn-cont-w3 btn-block mt-4" onclick="clickReset()"><a href="slr.html#dw" style="color:white">重置图线</a></button>
+  					</div>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+  	
+  	<div class="what py-5">
+  		<div class="container">
+  			<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
+  				&emsp;&emsp;为了在这无数条直线中找到最能反映施化肥量和水稻产量间统计学规律的直线，我们引入损失函数作为评价标准，损失函数为<br />
+  				<img src="movies/ss1.png" style="width:15%;height:15%;margin-left:40%;" />
+  				<br />
+  			</p>
+  			<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
+  				&emsp;&emsp;实质上，损失函数就是所有预测点到实际点的距离的平方和取平均的一半。
+  				在无数条直线中，有一条可以使损失函数的值最小，此时所有预测点到实际点的距离平方和是最小的，该直线也就是最优的直线。
+  			</p>
+  		</div>
+  	</div>
+  </div>
+  <!-- 第二个板块 -->
+  <div class="container row" id="dw2">
+  	<div style="margin-left:22em;max-width:200px;">
+  		<canvas id="canva" class="canvas" style="background:url(movies/zbz.png)">你的浏览器不支持canvas</canvas>
+  		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  		<script type="text/javascript">
+  			function Init()
+  			{
+  				var canvas = document.getElementById("canva");
+  				canvas.width = 800;
+  				canvas.height = 800;
+  				var ctx = canvas.getContext('2d');
+  				ctx.beginPath();
+  				ctx.arc(173,551,2,0,2*Math.PI);
+  				ctx.stroke();
+  				ctx.beginPath();
+  				ctx.arc(249,496,2,0,2*Math.PI);
+  				ctx.stroke();
+  				ctx.beginPath();
+  				ctx.arc(325,420,2,0,2*Math.PI);
+  				ctx.stroke();
+  				ctx.beginPath();
+  				ctx.arc(400,268,2,0,2*Math.PI);
+  				ctx.stroke();
+  				ctx.beginPath();
+  				ctx.arc(476,116,2,0,2*Math.PI);
+  				ctx.stroke();
+  				ctx.beginPath();
+  				ctx.arc(551,98,2,0,2*Math.PI);
+  				ctx.stroke();
+  				ctx.beginPath();
+  				ctx.arc(627,79,2,0,2*Math.PI);
+  				ctx.stroke();
+  				var png = new Image();
+  				png.src = './movies/zbz.png';
+  				png.onload = function(){
+  					ctx.drawImage(png,0,0);
+  				}
+  				var k = 3.57;
+  				var b = 300;
+  				var bl = -3.5;
+  				var bchange=97+(450-b)/10*38;
+  				var kchange=173+(((460-b)/k-15)/5)*76;
+  				ctx.strokeStyle = 'blue';
+  				ctx.beginPath();
+  				ctx.moveTo(59,bchange);
+  				ctx.lineTo(703,bchange-5*k*38);
+  				ctx.stroke();
+  				
+  				ctx.strokeStyle = 'red';
+  				ctx.beginPath();
+            		ctx.moveTo(173,551);//1
+            		ctx.lineTo(173,bchange-(1.5*k*38+bl*k*7));
+            		ctx.stroke();
+            		ctx.beginPath();
+            		ctx.moveTo(249,496);//2
+            		ctx.lineTo(249,bchange-(2*k*38+bl*k*6));
+            		ctx.stroke();
+            		ctx.beginPath();
+            		ctx.moveTo(325,420);//3
+            		ctx.lineTo(325,bchange-(2.5*k*38+bl*k*5));
+            		ctx.stroke();
+            		ctx.beginPath();
+            		ctx.moveTo(400,268);//4
+            		ctx.lineTo(400,bchange-(3*k*38+bl*k*4));
+            		ctx.stroke();
+            		ctx.beginPath();
+            		ctx.moveTo(476,116);//5
+            		ctx.lineTo(476,bchange-(3.5*k*38+bl*k*3));
+            		ctx.stroke();
+            		ctx.beginPath();
+            		ctx.moveTo(551,98);//6
+            		ctx.lineTo(551,bchange-(4*k*38+bl*k*2));
+            		ctx.stroke();
+            		ctx.beginPath();
+					ctx.moveTo(627,79);//7
+					ctx.lineTo(627,bchange-(4.5*k*38+bl*k*1));
+					ctx.stroke();
+				}
+				function Update(k,b)
+				{
+					var canvas = document.getElementById("canva");
+					canvas.width = 800;
+					canvas.height = 800;
+					var ctx = canvas.getContext('2d');
+					ctx.strokeStyle = 'black';
+					ctx.beginPath();
+					ctx.arc(173,551,2,0,2*Math.PI);
+					ctx.stroke();
+					ctx.beginPath();
+					ctx.arc(249,496,2,0,2*Math.PI);
+					ctx.stroke();
+					ctx.beginPath();
+					ctx.arc(325,420,2,0,2*Math.PI);
+					ctx.stroke();
+					ctx.beginPath();
+					ctx.arc(400,268,2,0,2*Math.PI);
+					ctx.stroke();
+					ctx.beginPath();
+					ctx.arc(476,116,2,0,2*Math.PI);
+					ctx.stroke();
+					ctx.beginPath();
+					ctx.arc(551,98,2,0,2*Math.PI);
+					ctx.stroke();
+					ctx.beginPath();
+					ctx.arc(627,79,2,0,2*Math.PI);
+					ctx.stroke();
+					var img = new Image();
+					img.src = './movies/zbz.png';
+					img.onload = function(){
+						ctx.drawImage(img,0,0);
+					}
+					var bl = -3.5;
+					var bchange=97+(450-b)/10*38;
+					var kchange=173+(((460-b)/k-15)/5)*76;
+					ctx.strokeStyle = 'blue';
+					ctx.beginPath();
+					ctx.moveTo(59,bchange);
+					ctx.lineTo(703,bchange-5*k*38);
+					ctx.stroke();
+					
+					ctx.strokeStyle = 'red';
+					ctx.beginPath();
+            		ctx.moveTo(173,551);//1
+            		ctx.lineTo(173,bchange-(1.5*k*38+bl*k*7));
+            		ctx.stroke();
+            		ctx.beginPath();
+            		ctx.moveTo(249,496);//2
+            		ctx.lineTo(249,bchange-(2*k*38+bl*k*6));
+            		ctx.stroke();
+            		ctx.beginPath();
+            		ctx.moveTo(325,420);//3
+            		ctx.lineTo(325,bchange-(2.5*k*38+bl*k*5));
+            		ctx.stroke();
+            		ctx.beginPath();
+            		ctx.moveTo(400,268);//4
+            		ctx.lineTo(400,bchange-(3*k*38+bl*k*4));
+            		ctx.stroke();
+            		ctx.beginPath();
+            		ctx.moveTo(476,116);//5
+            		ctx.lineTo(476,bchange-(3.5*k*38+bl*k*3));
+            		ctx.stroke();
+            		ctx.beginPath();
+            		ctx.moveTo(551,98);//6
+            		ctx.lineTo(551,bchange-(4*k*38+bl*k*2));
+            		ctx.stroke();
+            		ctx.beginPath();
+					ctx.moveTo(627,79);//7
+					ctx.lineTo(627,bchange-(4.5*k*38+bl*k*1));
+					ctx.stroke();
+				}
+				function ClickButton(){ 
+					var k = document.getElementById("kk").value;
+					var b = document.getElementById("bb").value;
+					k = Number(k);
+					b = Number(b);
+					window.k = k;
+					window.b = b;
+					window.o = true;
+					Update(k,b);
+				}
+				function ClickReset(){
+					window.o = false;
+					Init();
+					$("#kk").val("");
+					$("#bb").val("");
+				}
+				if (!window.o) {
+					Init();//范例_蓝
+					$("#kk").val("3.57");
+					$("#bb").val("300");
+					window.k = 3.57;
+					window.b = 300;
+				} else {
+					Update(window.k,window.b);
+				}
+				//滑条变量
+				function kkchange() {
+					var vk = document.getElementById("kkrange").value;
+					vk = Number(vk);
+					window.k = vk;
+					$("#kk").val(vk);
+					Update(vk,window.b);
+				}
+				function bbchange() {
+					var vb = document.getElementById("bbrange").value;
+					vb = Number(vb);
+					window.b = vb;
+					$("#bb").val(vb);
+					Update(window.k,vb);
+				}
+			</script>
+		</div>
+		<!-- 输入区域 -->
+		<div style="float:left;position:relative;left:80%;">
+			<div style="position:relative;left:-80%;margin-top:10em;">
+				<div class="from-group row">
+					<label>斜率θ1</label>
+					<input class="form-control" id="kk" type="text" placeholder="3.57" name="kk" required="请输入一个数字">
+				</div>
+				<div class="from-group row"><br /><br />
+					<input id="kkrange" type="range" min="0" max="10" step="0.1" value="3.57" oninput="kkchange()" onpropertychange="kkchange()">
+				</div>
+				<br /><br />
+				<div class="from-group row">
+					<label>截距θ0</label>
+					<input class="form-control" id="bb" type="text" placeholder="300" name="bb" required="请输入一个数字">
+				</div>
+				<div class="from-group row"><br /><br />
+					<input id="bbrange" type="range" min="280" max="430" step="1" value="300" oninput="bbchange()" onpropertychange="bbchange()">
+				</div>
+				<br /><br />
+				<div class="row mt-3">
+					<div class="col-md-12">
+						<button class="btn btn-cont-w3 btn-block mt-4" onclick="ClickButton()">绘制图线</button>
+					</div>
+					<div class="col-md-12">
+						<button type="reset" class="btn btn-cont-w3 btn-block mt-4" onclick="ClickReset()"><a href="slr.html#dw2" style="color:white">重置图线</a></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="what py-5">
+		<div class="container">
+			<h5 style="margin-top:2em">三、轮状图</h5>
+			<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
+				&emsp;&emsp;以θ1为x轴，θ0为y轴，损失函数值J(θ0，θ1) 为z轴，将实例中损失函数的图像做出，可以直观发现它有唯一的最低点。
+			</p>
+			<img src="movies/sw.png" style="margin-left:15%;" /><br />
+			<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
+				&emsp;&emsp;实际上，我们还有另一种方式反映损失函数最小时，θ0、θ1的值。
+				让我们保留xoy平面，并将所有J(θ0，θ1)值相同的点在平面上组成一个封闭曲面，就得到了轮状图。
+				轮状图比较接近地理中的等高线图，每一个封闭曲面上的点对应的J(θ0，θ1)都是相同的。
+				J(θ0，θ1)最小时对应的θ0、θ1就在所有“同心圆“的公共圆心处。
+			</p>
+			<p>这有一个轮状图！</p>
+		</div>
+	</div>
+	<div class="what py-5">
+		<div class="container">
+			<h5 style="margin-top:2em">四、梯度下降法</h5>
+			<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
+				&emsp;&emsp;梯度下降法是求解函数最值的一种算法，它的主要目的是通过迭代找到目标函数的最小值。
+				梯度下降法的核心思想是先找一个初始点，然后从初始点开始寻找下一个离最低点更近的点，直至找到最低点。
+			</p>
+			<p>这还有一个轮状图！</p>
+			<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
+				&emsp;&emsp;以下山做比喻，最低点就是山底，初始点就是山腰某处。想要从山腰到达山底只需要不断地沿着最陡峭的方向向下走。</p>
+				<h6>&emsp;（一）梯度下降法流程</h6>
+				<img src="movies/lct1.png" style="width:30%;height:30%;margin-left:100px;margin-top:2em;" /><br />
+				<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
+					&emsp;&emsp;寻找下一个点可以用公式：
+					<img src="movies/xz.png" style="width:15%;height:15%;" /><br />&emsp;&emsp;其中，α被称为学习速率，相当于一个人迈出一步的距离，叫做梯度，
+					梯度是一个向量，函数在该点处沿着该方向（此梯度的方向）值变化最快，相当于山某处最陡峭的方向。
+				</p>
+				<h6>&emsp;（二）实例</h6>
+				<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
+					&emsp;&emsp;为了简化问题，我们先假设实例问题中水稻产量和施化肥量正相关，也就是θ0=0。<br />&emsp;&emsp;此时损失函数变为单变量函数
+					<img src="movies/dbl.png" style="width:17%;height:17%;" />
+					此时可以用导数代替梯度，以导数值趋近于零为最低点的判断条件，用梯度下降法求解最低点的过程如下：
+					<br /><br /><img src="movies/dt1.gif" style="width:50%;height:50%;margin-left:30%" /><br /><br />
+					&emsp;&emsp;有一点需要注意的是，学习速率α不能过大，否则可能会跨过最低点，这样永远也找不到最低点了。
+					<br /><br /><img src="movies/dt2.gif" style="width:50%;height:50%;margin-left:30%;" /><br /><br />
+					&emsp;&emsp;大家可以在下图自行设置学习速率α与初始点x0，感受一下寻找最低点的过程。
+				</p>
+			</div>
+		</div>
+		<!-- 第三个板块 -->
+		<div class="container row" id="dw3" style="max-width:1100px;margin-bottom:4em;">
+			<div style="margin-left:10em;margin-top:0em;max-width:430px;">
+				<canvas id="canv" class="canvas" width="1047px" height="610px" style="background:url(movies/ectx.png)">你的浏览器不支持canvas</canvas>
+				<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+				<script type="text/javascript">
+					function print_bg() {
+						var canvas = document.getElementById("canv");
+						var ctx = canvas.getContext('2d');
+						var ectx = new Image();
+						ectx.src = './movies/ectx.png';
+						ectx.onload = function(){
+							ctx.drawImage(ectx,0,0);
+						}
+					}
+					function Reset() {
+						var canvas = document.getElementById("canv");
+						var ctx = canvas.getContext('2d');
+						var ectx = new Image();
+						var kb = new Image();
+						ectx.src = './movies/ectx.png';
+						kb.src = './movies/kb.png'
+						kb.onload = function(){
+							ctx.drawImage(kb,0,0);
+							ctx.drawImage(ectx,0,0);
+						}
+						window.oo = true;
+						window.a = 0.01;
+						window.x = -3;
+						$("#kp").val("偏导数为 : \n横坐标为 : ")
+					}
+					function achange() {
+						var va = document.getElementById("arange").value;
+						window.a = va;
+						$("#a").val(va);
+					}
+					function xchange() {
+						var vx = document.getElementById("xrange").value;
+						window.x = vx;
+						$("#x").val(vx);
+					}
+					function cul_p() {
+						return Number(20 * window.x - 5.687);
+					}
+					function f(x) {
+						return Number(10 * x * x - 5.687 * x + 0.91)
+					}
+					function draw(xx) {
+						if(xx < -3 || xx > 3.5) { return; }
+						var x = (xx + 7) * 74.5 + 11;
+						var y = (100 - f(xx)) * 5.5 + 27.5;
+						var canvas = document.getElementById("canv");
+						var ctx = canvas.getContext('2d');
+						ctx.strokeStyle = 'blue';
+						ctx.beginPath();
+						ctx.arc(x,y,2,0,2*Math.PI);
+						ctx.stroke();
+					}
+					function cul() {
+						if(window.oo){
+							var aa = document.getElementById("a").value;
+							var xx = document.getElementById("x").value;
+							if(aa) {
+								window.a = aa;
+							}
+							if(xx) {
+								window.x = xx;
+							}
+							window.oo = false;
+						}
+					draw(window.x);//画图像
+					if(Math.abs( 20 * window.x - 5.687 ) >= 0.05) {
+						var xx = window.x - a * cul_p();
+						$("#kp").val("偏导数为 : " + Number(20 * window.x - 5.687) + "\n横坐标为 : " + window.x);
+						window.x = xx;
+					}
+				}
+			</script>
+		</div>
+		<div style="float:left;position:relative;left:87%;">
+			<div style="position:relative;left:-80%;margin-top:2em;">
+				<div class="from-group row">
+					<label>常数α</label>
+					<input class="form-control" id="a" type="text" placeholder="0.01" name="a">
+				</div>
+				<div class="from-group row" style="position:relative;"><br /><br />
+					<div style="opacity:0.4;position:absolute;left:0px; top:17px;z-index:1;">
+						<input id="arange" type="range" min="0" max="0.09" step="0.005" value="0.01" oninput="achange()" onpropertychange="achange()">
+					</div>
+					<div style="position:absolute;left:0px; top:10px;z-index:-1;"><img src="images/range_bg.png" height="30px" width="100%" /></div>
+				</div>
+				<br />
+				<div class="from-group row">
+					<label>初始点x0</label>
+					<input class="form-control" id="x" type="text" placeholder="-3" name="x">
+				</div>
+				<div class="from-group row" style="position:relative;"><br /><br />
+					<div style="opacity:0.4;position:absolute;left:0px; top:17px;z-index:1;">
+						<input id="xrange" type="range" min="-3" max="3.5" step="0.5" value="-3" oninput="xchange()" onpropertychange="xchange()">
+					</div>
+					<div style="position:absolute;left:0px; top:10px;z-index:-1;"><img src="images/range_bg.png" height="30px" width="100%" /></div>
+				</div>
+				<div class="row mt-3">
+					<div class="col-md-12">
+						<button class="btn btn-cont-w3 btn-block mt-4" onclick="cul()">计算</button>
+					</div>
+					<div class="col-md-12">
+						<button type="reset" class="btn btn-cont-w3 btn-block mt-4" onclick="Reset()"><a href="slr.html#dw3" style="color:white">重置</a></button>
+					</div>
+				</div>
+				<br /><br />
+				<textarea id="kp" style="height:54px;width:290px;resize:none;">偏导数为 :
+					横坐标为 :</textarea>
+				</div>
+			</div>
+		</div>
+		<!-- 视频 -->
+	<!--
+	<div style="text-align:center; margin: 3em 0em;">
+		<video width="1280" height="720" controls="controls">
+  			<source src="movies/slr.mp4" type="video/mp4" />
+  			<source src="movies/slr.ogg" type="video/ogg" />
+  			<source src="movies/slr.webm" type="video/webm" />
+  			<object data="movies/slr.mp4" width="1280" height="720">
+    		<embed src="movies/slrswf" width="1280" height="720" />
+  		</object>
+		</video>
+	</div>
+-->
+
+<!-- copyright bottom -->
+<div class="copy-bottom bg-li py-4 border-top">
+	<div class="container-fluid">
+		<div class="d-md-flex px-md-3 position-relative text-center">
+			<!-- copyright -->
+			<div class="copy_right mx-md-auto mb-md-0 mb-3">
+				<p class="text-bl let">Copyright &copy; 2020.Company name All rights reserved.</p>
+			</div>
+			<!-- //copyright -->
+			<!-- move top icon -->
+			<a href="#home" class="move-top text-center">
+				<span class="fa fa-level-up" aria-hidden="true"></span>
+			</a>
+			<!-- //move top icon -->
+		</div>
+	</div>
+</div>
+<!-- //copyright bottom -->
+
+</body>
+
+</html>

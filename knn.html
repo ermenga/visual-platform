@@ -1,0 +1,449 @@
+	<!DOCTYPE html>
+	<html lang="zxx">
+
+	<head>
+	<title>K近邻算法</title>
+	<!-- Meta tag Keywords -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8" />
+	<meta name="keywords" content="" />
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+		function hideURLbar() {
+			//window.scrollTo(0, 1);
+		}
+		window.x = 0;
+		window.y = 3;
+		window.k = 3;
+		window.o = false;
+		window.ax = new Array(30);//横坐标
+		window.ay = new Array(30);//纵坐标
+		var z = new Array(30);//种类信息
+		window.ax[0]=-1.91357386;window.ay[0]=2.8725641;z[0]=0;
+		window.ax[1]=1.76760391;window.ay[1]=1.81861835;z[1]=1;
+		window.ax[2]=2.02745511;window.ay[2]=1.88768969;z[2]=1;
+		window.ax[3]=1.46732855;window.ay[3]=0.81152212;z[3]=1;
+		window.ax[4]=3.36185277;window.ay[4]=1.1273806;z[4]=1;
+		window.ax[5]=2.51866172;window.ay[5]=1.55470099;z[5]=1;
+		window.ax[6]=-1.73368206;window.ay[6]=2.2002046;z[6]=0;
+		window.ax[7]=-0.94156859;window.ay[7]=2.24009433;z[7]=0;
+		window.ax[8]=-0.62913178;window.ay[8]=3.14798924;z[8]=2;
+		window.ax[9]=-0.30648308;window.ay[9]=3.29162069;z[9]=2;
+		window.ax[10]=-1.10355256;window.ay[10]=1.87690504;z[10]=0;
+		window.ax[11]=-1.54337736;window.ay[11]=2.07300501;z[11]=0;
+		window.ax[12]=2.09296846;window.ay[12]=2.22689751;z[12]=1;
+		window.ax[13]=-2.06193131;window.ay[13]=2.2463591;z[13]=0;
+		window.ax[14]=-1.41275721;window.ay[14]=3.34453592;z[14]=0;
+		window.ax[15]=0.46820611;window.ay[15]=2.39217116;z[15]=1;
+		window.ax[16]=-1.81215938;window.ay[16]=1.48754256;z[16]=0;
+		window.ax[17]=-1.02376211;window.ay[17]=5.17046524;z[17]=2;
+		window.ax[18]=-0.30579131;window.ay[18]=3.73715542;z[18]=2;
+		window.ax[19]=1.79125271;window.ay[19]=2.09380938;z[19]=1;
+		window.ax[20]=-0.38059326;window.ay[20]=3.7823553;z[20]=2;
+		window.ax[21]=2.91966753;window.ay[21]=2.88161526;z[21]=1;
+		window.ax[22]=2.73817441;window.ay[22]=2.72142791;z[22]=1;
+		window.ax[23]=-0.96833871;window.ay[23]=3.87235583;z[23]=2;
+		window.ax[24]=-1.42994695;window.ay[24]=1.90918568;z[24]=0;
+		window.ax[25]=0.03991033;window.ay[25]=4.18148314;z[25]=2;
+		window.ax[26]=-0.53727994;window.ay[26]=4.2321415;z[26]=2;
+		window.ax[27]=-0.87946521;window.ay[27]=1.41363327;z[27]=0;
+		window.ax[28]=-0.01690934;window.ay[28]=4.25699912;z[28]=2;
+		window.ax[29]=-0.75167722;window.ay[29]=4.46649421;z[29]=2;
+	</script>
+			<!-- //Meta tag Keywords -->
+
+
+			<link rel="icon" href="images/logo-f.png" sizes="64x64">
+			<link rel="stylesheet" href="css/bootstrap.css">
+			<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+			<link href="css/font-awesome.min.css" rel="stylesheet">
+			<style type="text/css">
+				input[type=range] {
+					-webkit-appearance: none;
+					width: 300px;
+					//border-radius: 10px; /*这个属性设置使填充进度条时的图形为圆角*/
+				}
+				input[type=range]:focus {
+					outline: none;
+				}
+				input[type=range]::-webkit-slider-thumb {
+					-webkit-appearance: none;
+					height: 25px;
+					width: 25px;
+					margin-top: -5px; /*使滑块超出轨道部分的偏移量相等*/
+					background: #ffffff; 
+					border-radius: 50%; /*外观设置为圆形*/
+					border: solid 0.125em rgba(205, 224, 230, 0.5); /*设置边框*/
+					box-shadow: 0 .125em .125em #3b4547; /*添加底部阴影*/
+				}
+				table
+				{
+					border-collapse: collapse;
+					margin: 0 auto;
+					width: 80%;
+					text-align: center;
+				}
+				table td, table th
+				{
+					border: 1px solid #cad9ea;
+					color: #666;
+					height: 30px;
+				}
+				table thead th
+				{
+					background-color: #CCE8EB;
+					width: 100px;
+				}
+				table tr:nth-child(odd)
+				{
+					background: #fff;
+				}
+				table tr:nth-child(even)
+				{
+					background: #F5FAFA;
+				}
+	/*
+	pre {
+	    margin: 0 0 24px;
+		padding: 8px 16px 6px 56px;
+			border: none;
+			word-wrap: break-word;
+			font-size: 14px;
+		line-height: 22px;
+		color: #000;
+		position: relative;
+		overflow-y: hidden;
+		overflow-x: auto;
+		box-sizing: border-box;
+	}
+	code {
+		background-color: #f6f8fa;
+		color: #4f4f4f!important;
+		display: block;
+		padding: 8px;
+		word-wrap: break-word;
+		font-size: 14px;
+		line-height: 22px;
+		border-radius: 4px;
+	}
+	*/
+	</style>
+
+	<!-- Web-Fonts -->
+	<link href="http://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext"
+	rel="stylesheet">
+	<!-- //Web-Fonts -->
+	</head>
+
+	<body>
+	<!-- main banner -->
+	<div class="main-top" id="home">
+		<!-- header -->
+		<header>
+			<div class="container-fluid">
+				<div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
+					<!-- logo -->
+					<div id="logo">
+						<h1><a href="index.html"><img src="images/logo.png" alt="" class="img-fluid" />云旗</a></h1>
+					</div>
+					<!-- //logo -->
+					<!-- nav -->
+					<div class="nav_w3ls">
+						<nav>
+							<label for="drop" class="toggle">Menu</label>
+							<input type="checkbox" id="drop" />
+							<ul class="menu">
+								<li><a href="index.html">主页</a></li>
+								<li><a href="about.html">关于我们</a></li>
+								<li><a href="pricing.html">K近邻算法</a></li>
+								<li>
+									<!-- First Tier Drop Down -->
+									<label for="drop-2" class="toggle toogle-2">导航 <span class="fa fa-angle-down" aria-hidden="true"></span>
+									</label>
+									<a href="#" class="active">导航 <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+									<input type="checkbox" id="drop-2" />
+									<ul>
+										<li><a href="slr.html" class="drop-text">线性回归</a></li>
+										<li><a href="knn.html" class="drop-text">K近邻算法</a></li>
+										<li><a href="faq.html" class="drop-text">常见问题</a></li>
+										<li><a href="about.html#partners" class="drop-text">合作伙伴</a></li>
+										<li><a href="about.html" class="drop-text">我们的团队</a></li>
+									</ul>
+								</li>
+								<li><a href="contact.html">联系我们</a></li>
+							</ul>
+						</nav>
+					</div>
+					<!-- //nav -->
+					<div class="d-flex mt-lg-1 mt-sm-2 mt-3 justify-content-center">
+						<!-- 搜索 -->
+						<div class="search-w3layouts mr-3">
+							<form action="#" method="post" class="search-bottom-wthree d-flex">
+								<input class="search" type="search" placeholder="站内搜索..." required="">
+								<button class="form-control btn" type="submit"><span class="fa fa-search"></span></button>
+							</form>
+						</div>
+						<!-- //搜索 -->
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- //header -->
+
+		<!-- banner -->
+		<div class="banner_w3lspvt-2">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="index.html">主页</a></li>
+				<li class="breadcrumb-item" aria-current="page">K近邻算法</li>
+			</ol>
+		</div>
+		<!-- //banner -->
+	</div>
+	<!-- //main banner -->
+	<div class="what py-5">
+		<div class="container">
+			<p class="text-sty-banner">首先生成一个训练集(数据集)，生成方式如下代码：(此例生成30个数据，即N=30)</p>
+			<div style="background: #fafafa; width: 50%; margin-left: 25%;">
+				<code style="background: #fafafa;">
+					<div style="overflow:auto; white-space:nowrap; width: 100%;">
+						from sklearn.datasets import make_blobs<br />
+						from matplotlib import pyplot<br />
+						centers = [[-2,2], [2,2], [0,4]]<br />
+						data,target=make_blobs(n_samples=30, centers=centers, random_state=0, cluster_std=0.60)<br />
+						print(data,target)<br />
+						pyplot.scatter(data[:,0],data[:,1],c=target);<br />
+						pyplot.show()<br />
+					</div>
+				</code>
+			</div>
+		</div>
+	</div>
+
+	<div class="container row" id="dw" style="margin:5em 0em">
+		<div style="margin-left:22em;max-width:200px;">
+			<canvas id="canva" class="canvas" style="background:url(movies/knn1.png)">你的浏览器不支持canvas</canvas>
+			<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+			<script type="text/javascript">
+				function xcg(x){
+					return ((x+2)*103.9+135.1);
+				}
+				function ycg(y){
+					return (303-(y-3)*96.2);
+				}
+				function Find(vx,vy,time,ctx){
+					ctx.strokeStyle = 'blue';
+					ctx.fillStyle = 'blue';
+					ctx.beginPath();
+					ctx.arc((vx+2)*103.9+135.1,303-(vy-3)*96.2,5.3,0,2*Math.PI);
+					ctx.stroke();
+					ctx.fill();
+					var d=new Array(30);
+					for(var i=0;i<30;i++){
+						d[i]=Math.sqrt(Math.pow(vx-window.ax[i],2)+Math.pow(vy-window.ay[i],2));
+					}
+					var mintemp;
+					var minpos=new Array(time);//最小下标
+					var m=0;
+					for(var j=0;j<time;j++){
+						minpos[j]=0;
+						mintemp=999;//取最大数
+						for(var n=0;n<30;n++){
+							if(d[n]<mintemp){
+								for(m=0;m<j;m++){
+									if(n==minpos[m]) break;
+								}
+								if(m==j) {
+									minpos[j]=n;
+									mintemp=d[n];
+								}
+							}
+						}
+					}
+					for(m=0;m<time;m++){
+						if(z[minpos[m]]==0){
+							ctx.strokeStyle = 'black';
+							ctx.fillStyle = 'black';
+						}else if(z[minpos[m]]==2){
+							ctx.strokeStyle = 'yellow';
+							ctx.fillStyle = 'yellow';
+						}else{
+							ctx.strokeStyle = 'green';
+							ctx.fillStyle = 'green';
+						}
+						ctx.beginPath();
+						ctx.moveTo(xcg(vx),ycg(vy));
+						ctx.lineTo(xcg(window.ax[minpos[m]]),ycg(window.ay[minpos[m]]));
+						ctx.stroke();
+					}
+					ctx.strokeStyle = 'blue';
+					ctx.beginPath();
+					ctx.arc(xcg(vx),ycg(vy),d[minpos[time-1]]*100,0,2*Math.PI);
+					ctx.stroke();
+	    			//return d[minpos[time-1]]*100;//返回一个最长距离(注意比例)
+	    		}
+	    		function Init(){
+	    			var canvas = document.getElementById("canva");
+	    			canvas.width = 800;
+	    			canvas.height = 600;
+	    			var ctx = canvas.getContext('2d');
+	    			for(var i = 0;i < 30;i++){
+	    				if(z[i]==0){
+	    					ctx.strokeStyle = 'black';
+	    					ctx.fillStyle = 'black';
+	    				}else if(z[i]==2){
+	    					ctx.strokeStyle = 'yellow';
+	    					ctx.fillStyle = 'yellow';
+	    				}else{
+	    					ctx.strokeStyle = 'green';
+	    					ctx.fillStyle = 'green';
+	    				}
+	    				ctx.beginPath();
+	    				ctx.arc(xcg(x[i]),ycg(y[i]),5.3,0,2*Math.PI);
+	    				ctx.stroke();
+	    				ctx.fill();
+	    			}
+	    			Find(0,3,3,ctx);
+	    		}
+	    		function Update(xx,yy,kk){
+	    			var canvas = document.getElementById("canva");
+	    			canvas.width = 800;
+	    			canvas.height = 600;
+	    			var ctx = canvas.getContext('2d');
+	    			for(var i = 0;i < 30;i++){
+	    				if(z[i]==0){
+	    					ctx.strokeStyle = 'black';
+	    					ctx.fillStyle = 'black';
+	    				}else if(z[i]==2){
+	    					ctx.strokeStyle = 'yellow';
+	    					ctx.fillStyle = 'yellow';
+	    				}else{
+	    					ctx.strokeStyle = 'green';
+	    					ctx.fillStyle = 'green';
+	    				}
+	    				ctx.beginPath();
+	    				ctx.arc(xcg(x[i]),ycg(y[i]),5.3,0,2*Math.PI);
+	    				ctx.stroke();
+	    				ctx.fill();
+	    			}
+	    			Find(xx,yy,kk,ctx);
+	    		}
+	    		function ClickButton(){ 
+	    			var k = document.getElementById("kk").value;
+	    			var x = document.getElementById("xx").value;
+	    			var y = document.getElementById("yy").value;
+	    			k = Number(k);
+	    			x = Number(x);
+	    			y = Number(y);
+	    			window.k = k;
+	    			window.x = x;
+	    			window.y = y;
+	    			window.o = true;
+	    			Update(x,y,k);
+	    		}
+	    		function ClickReset(){
+	    			window.o = false;
+	    			Init();
+	    			$("#kk").val("");
+	    			$("#xx").val("");
+	    			$("#yy").val("");
+	    		}
+	    		if (!window.o) {
+					Init();//范例(0,3,3)
+					$("#kk").val("3");
+					$("#xx").val("0");
+					$("#xx").val("3");
+					window.x = 0;
+					window.y = 3;
+					window.k = 3;
+				} else {
+					Update(window.x,window.y,window.k);
+				}
+				//滑条变量
+				function kkchange() {
+					var vk = document.getElementById("kkrange").value;
+					vk = Number(vk);
+					window.k = vk;
+					$("#kk").val(vk);
+					Update(window.x,window.y,vk);
+				}
+				function xxchange() {
+					var vx = document.getElementById("xxrange").value;
+					vx = Number(vx);
+					window.x = vx;
+					$("#xx").val(vx);
+					Update(vx,window.y,window.k);
+				}
+				function yychange() {
+					var vy = document.getElementById("yyrange").value;
+					vy = Number(vy);
+					window.y = vy;
+					$("#yy").val(vy);
+					Update(window.x,vy,window.k);
+				}
+			</script>
+		</div>
+		<!-- 输入区域 -->
+		<div style="float:left;position:relative;left:80%;">
+			<div style="position:relative;left:-80%;margin-top:0em;">
+				<div class="from-group row">
+					<label>K值</label>
+					<input class="form-control" id="kk" type="text" placeholder="3" name="kk" required="请输入一个数字">
+				</div>
+				<div class="from-group row"><br /><br />
+					<input id="kkrange" type="range" min="1" max="29" step="1" value="3" oninput="kkchange()" onpropertychange="kkchange()">
+				</div>
+				<br /><br />
+				<div class="from-group row">
+					<label>横坐标x</label>
+					<input class="form-control" id="xx" type="text" placeholder="0" name="bb" required="请输入一个数字">
+				</div>
+				<div class="from-group row"><br /><br />
+					<input id="xxrange" type="range" min="-2.1" max="3.5" step="0.1" value="0" oninput="xxchange()" onpropertychange="xxchange()">
+				</div>
+				<br /><br />
+				<div class="from-group row">
+					<label>纵坐标y</label>
+					<input class="form-control" id="yy" type="text" placeholder="3" name="bb" required="请输入一个数字">
+				</div>
+				<div class="from-group row"><br /><br />
+					<input id="yyrange" type="range" min="0.8" max="5.2" step="0.1" value="3" oninput="yychange()" onpropertychange="yychange()">
+				</div>
+				<br /><br />
+				<div class="row mt-3">
+					<div class="col-md-12">
+						<button class="btn btn-cont-w3 btn-block mt-4" onclick="ClickButton()">绘制图线</button>
+					</div>
+					<div class="col-md-12">
+						<button type="reset" class="btn btn-cont-w3 btn-block mt-4" onclick="ClickReset()"><a href="knn.html#dw" style="color:white">重置图线</a></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- copyright bottom -->
+	<div class="copy-bottom bg-li py-4 border-top">
+		<div class="container-fluid">
+			<div class="d-md-flex px-md-3 position-relative text-center">
+				<!-- copyright -->
+				<div class="copy_right mx-md-auto mb-md-0 mb-3">
+					<p class="text-bl let">Copyright &copy; 2020.Company name All rights reserved.</p>
+				</div>
+				<!-- //copyright -->
+				<!-- move top icon -->
+				<a href="#home" class="move-top text-center">
+					<span class="fa fa-level-up" aria-hidden="true"></span>
+				</a>
+				<!-- //move top icon -->
+			</div>
+		</div>
+	</div>
+	<!-- //copyright bottom -->
+
+	</body>
+
+	</html>
