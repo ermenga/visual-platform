@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+	<title>决策树</title>
+	<!-- Meta tag Keywords -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8" />
+	<meta name="keywords" content="" />
+	</style>
+	<script>
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+		window.frequency = 0;
+	</script>
+	<!-- //Meta tag Keywords -->
+	
+	<!-- Icon -->
+	<link rel="icon" href="images/logo-f.png" sizes="64x64">
+	<!-- Custom-Files -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Bootstrap-Core-CSS -->
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+	<!-- Style-CSS -->
+	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<!-- Font-Awesome-Icons-CSS -->
+	<script src="js/jquery-1.8.3.min.js"></script>
+	<link href="css/table.css" rel="stylesheet">
+	<!-- 引入MathJax -->
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+	    showProcessingMessages: false,messageStyle: "none",extensions: ["tex2jax.js"],jax: ["input/TeX", "output/HTML-CSS"],
+	    tex2jax: {
+	      inlineMath: [ ['$','$'], ["\\(","\\)"] ],displayMath: [ ['$$','$$'], ["\\[","\\]"] ],skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code', 'a', 'annotation', 'annotation-xml'],ignoreClass: 'crayon-.*'
+	    },'HTML-CSS': {showMathMenu: false}
+	  });
+	  MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+	</script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- //引入MathJax -->
+    
+	<!-- //Custom-Files -->
+
+	<!-- Web-Fonts -->
+	<link href="http://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext"
+	 rel="stylesheet">
+	<!-- //Web-Fonts -->
+</head>
+
+<body>
+
+	<!-- main banner -->
+	<div class="main-top" id="home">
+		<!-- header -->
+		<header>
+			<div class="container-fix">
+				<div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
+					<!-- logo -->
+					<div id="logo">
+						<h1><a href="index.html"><img src="images/logo.png" alt="" class="img-fluid" />云旗</a></h1>
+					</div>
+					<!-- //logo -->
+					<!-- nav -->
+					<div class="nav_w3ls">
+						<nav>
+							<label for="drop" class="toggle">菜单</label>
+							<input type="checkbox" id="drop" />
+							<ul class="menu">
+								<li><a href="index.html">主页</a></li>
+								<li><a href="about.html">关于我们</a></li>
+								<li><a href="pricing.html">空白</a></li>
+								<li>
+									<!-- First Tier Drop Down -->
+									<label for="drop-2" class="toggle toogle-2">导航 <span class="fa fa-angle-down" aria-hidden="true"></span>
+									</label>
+									<a href="#" class="active"><strong>导航 </strong><span class="fa fa-angle-down" aria-hidden="true"></span></a>
+									<input type="checkbox" id="drop-2" />
+									<ul>
+										<li><a href="slr.html" class="drop-text">线性回归</a></li>
+										<li><a href="knn.html" class="drop-text">K近邻算法</a></li>
+										<li><a href="dt.html" class="drop-text">决策树</a></li>
+										<li><a href="faq.html" class="drop-text">常见问题</a></li>
+										<li><a href="about.html#partners" class="drop-text">合作伙伴</a></li>
+										<li><a href="about.html" class="drop-text">我们的团队</a></li>
+									</ul>
+								</li>
+								<li><a href="contact.html">联系我们</a></li>
+							</ul>
+						</nav>
+					</div>
+					<!-- //nav -->
+					<div class="d-flex mt-lg-1 mt-sm-2 mt-3 justify-content-center">
+						<!-- 搜索 -->
+						<div class="search-w3layouts mr-3">
+							<form action="#" method="post" class="search-bottom-wthree d-flex">
+								<input class="search" type="search" placeholder="站内搜索..." required="">
+								<button class="form-control btn" type="submit"><span class="fa fa-search"></span></button>
+							</form>
+						</div>
+						<!-- //搜索 -->
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- //header -->
+
+		<!-- banner -->
+		<div class="banner_w3lspvt-2">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="index.html">主页</a></li>
+				<li class="breadcrumb-item" aria-current="page">决策树</li>
+			</ol>
+		</div>
+		<!-- //banner -->
+	</div>
+	<!-- //main banner -->
+		
+	<!-- 主要内容 -->
+	<h3 style="font-size:4rem;font-weight:600;color:#202428;text-align:center;">决策树</h3>
+	<div class="what py-5">
+		<div class="container">
+		<h5>先来看一个实例</h5>
+		<p class="text-sty-banner" style="max-width: 1000px;">某行为了研究具有什么特征的人更有可能申请贷款,找来了一些样本进行研究,下表含有15个数据,每个数据有四个特征。</p>
+		</div>
+		<div class="container">
+			<table width="80%" style="line-height: 1;margin-top: 1em;" class="table">
+				<thead>
+					<tr>
+					<th>ID</th>
+					<th>年龄</th>
+					<th>有工作</th>
+					<th>有自己的房子</th>
+					<th>信贷情况</th>
+					<th>类别(是否申请贷款)</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+					<td>1</td>
+					<td>青年</td>
+					<td>否</td>
+					<td>否</td>
+					<td>一般</td>
+					<td>否</td>
+					</tr>
+					<tr>
+					<td>2</td>
+					<td>青年</td>
+					<td>否</td>
+					<td>否</td>
+					<td>好</td>
+					<td>否</td>
+					</tr>
+					<tr>
+					<td>3</td>
+					<td>青年</td>
+					<td>是</td>
+					<td>否</td>
+					<td>好</td>
+					<td>是</td>
+					</tr>
+					<tr>
+					<td>4</td>
+					<td>青年</td>
+					<td>是</td>
+					<td>是</td>
+					<td>一般</td>
+					<td>是</td>
+					</tr>
+					<tr>
+					<td>5</td>
+					<td>青年</td>
+					<td>否</td>
+					<td>否</td>
+					<td>一般</td>
+					<td>否</td>
+					</tr>
+					<tr>
+					<td>6</td>
+					<td>中年</td>
+					<td>否</td>
+					<td>否</td>
+					<td>一般</td>
+					<td>否</td>
+					</tr>
+					<tr>
+					<td>7</td>
+					<td>中年</td>
+					<td>否</td>
+					<td>否</td>
+					<td>好</td>
+					<td>否</td>
+					</tr>
+					<tr>
+					<td>8</td>
+					<td>中年</td>
+					<td>是</td>
+					<td>是</td>
+					<td>好</td>
+					<td>是</td>
+					</tr>
+					<tr>
+					<td>9</td>
+					<td>中年</td>
+					<td>否</td>
+					<td>是</td>
+					<td>非常好</td>
+					<td>是</td>
+					</tr>
+					<tr>
+					<td>10</td>
+					<td>中年</td>
+					<td>否</td>
+					<td>是</td>
+					<td>非常好</td>
+					<td>是</td>
+					</tr>
+					<tr>
+					<td>11</td>
+					<td>老年</td>
+					<td>否</td>
+					<td>是</td>
+					<td>非常好</td>
+					<td>是</td>
+					</tr>
+					<tr>
+					<td>12</td>
+					<td>老年</td>
+					<td>否</td>
+					<td>是</td>
+					<td>好</td>
+					<td>是</td>
+					</tr>
+					<tr>
+					<td>13</td>
+					<td>老年</td>
+					<td>是</td>
+					<td>否</td>
+					<td>好</td>
+					<td>是</td>
+					</tr>
+					<tr>
+					<td>14</td>
+					<td>老年</td>
+					<td>是</td>
+					<td>否</td>
+					<td>非常好</td>
+					<td>是</td>
+					</tr>
+					<tr>
+					<td>15</td>
+					<td>老年</td>
+					<td>否</td>
+					<td>否</td>
+					<td>一般</td>
+					<td>否</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="container">
+			<h5>首先计算经验熵H(D)</h5>
+			<p class="text-sty-banner">$ H(D)=-\sum_{i=1}^n P_i×logP_i\quad 当P_i=0或1时，规定P_i×logP_i=0 $</p>
+			<p class="text-sty-banner">$ H(D)=-\frac 9{15}log_2(\frac 9{15})-\frac 6{15}log_2(\frac 6{15})=0.971 $</p>
+			<h5>然后计算各特征对数据集D的信息增益g(D,An)</h5>
+			<p class="text-sty-banner">信息增益有如下计算公式g(D,An)=H(D)-H(D|An),本例分别以$ A_1,A_2,A_3,A_4 $表示年龄、有工作、有自己的房子和信贷情况4个特征。<br />
+			对于条件熵有如下公式</p><p class="text-sty-banner">$ H(Y|X)=\sum_{i=1}^n P_i×H(Y|X=X_i)\quad 其中P_i=P(X=X_i) $</p>
+			<p class="text-sty-banner">g(D,A1) = H(D) - [5/15(H(D1)) + 5/15H(D2) + 5/15H(D3)] = 0.971 - 0.888 = 0.083<br />
+			g(D,A2) = 0.324     g(D,A3) = 0.420     g(D,A4) = 0.369<br />
+			由计算结果可知g(D,A1) < g(D,A2) < g(D,A4) < g(D,A3)</p>
+			<h5>按照此顺序进行建树</h5>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript">
+		function img_change(ch){
+			if(ch == '0'){
+				window.frequency = 0;
+				$("#create").attr('src',"images/dt-0.png");
+				return;
+			}else if(ch=='+'){
+				if(window.frequency < 10) window.frequency+=1;
+				else alert("构建完毕！");
+			}else{
+				if(window.frequency <= 0) alert("不能再返回啦！");
+				else window.frequency-=1;
+			}
+			switch(window.frequency){
+				case 0:$("#create").attr('src',"images/dt-0.png");break;
+				case 1:$("#create").attr('src',"images/dt-1.png");break;
+				case 2:$("#create").attr('src',"images/dt-2.png");break;
+				case 3:$("#create").attr('src',"images/dt-3.png");break;
+				case 4:$("#create").attr('src',"images/dt-4.png");break;
+				case 5:$("#create").attr('src',"images/dt-5.png");break;
+				case 6:$("#create").attr('src',"images/dt-6.png");break;
+				case 7:$("#create").attr('src',"images/dt-7.png");break;
+				case 8:$("#create").attr('src',"images/dt-8.png");break;
+				case 9:$("#create").attr('src',"images/dt-9.png");break;
+				case 10:$("#create").attr('src',"images/dt-10.png");break;
+				default:alert("var window.frequency = error");break;
+			}
+		}
+		</script>
+		<div class="container">
+			<h5 style="margin: 2em 0em; text-align: center;"><bottom onclick="img_change('+')" class="btn button-style button-style-2" style="margin: 0em 1em;">构建</bottom><bottom onclick="img_change('-')" class="btn button-style button-style-2" style="margin: 0em 1em;">返回</bottom><bottom onclick="img_change('0')" class="btn button-style button-style-2" style="margin: 0em 1em;">重置</bottom></h5>
+			<div><img style="width:100%;margin-bottom: 3em;" src="images/dt-0.png" id="create"/></div>
+		</div>
+		<script>
+			$(function(){
+				$("#T0").hover(function(){
+					$(this).append("<p id='pic' style='padding:0px; margin:0px;'><img src='"+this.href+"' id='pic1'></p>");
+					$("#T0").mousemove(function(e){
+						$("#pic1").css("z-index","2");
+						$("#pic1").css("position","absolute");
+						$("#pic").fadeIn("fast");
+					});
+				},function(){
+					$("#pic").remove();
+				});
+			});
+		</script>
+		<div class="container" style="z-index: 0; position: relative;">
+			<h5>最后我们需要剪枝构建好的$ \color{#007bff}{T_0} $<a href="images/T0.png" id="T0">树</a></h5>
+			<p class="text-sty-banner">剪枝时会用到基尼系数，它与熵一样都反映了不确定性，且不确定性越大，其数值越大，对于基尼系数有以下公式$ Gini(D)=\sum_{k=1}^k P_k(1-P_k)\quad \quad \quad Gini(D|A)=\sum_{i=1}^n P_i×Gini(D|A_i) $<br />
+			如果不考虑泛化能力，在训练集上生成的所有不同规则集合对应的决策树中，挑选出最优的决策树，可以根据所有叶结点中的预测误差来衡量，即模型与训练数据的拟合程度。设树T的叶结点个数为|T|，t是树T的一个叶结点，该叶结点有$ N_t $个样本点，其中k类的样本点有$ N_{tk} $个，k=1,2,...,K，K为样本空间中的所属分类数量。对叶结点t上的经验熵$ H_t(T) $有:$ H_t(T)=-\sum_k \frac {N_{tk}}{N_t}log\frac {N_{tk}}{N_t} $<br />
+			考虑到所有的叶结点每个叶结点中的样例个数不同，我们采用Gini(T)来衡量模型对训练数据的整体测量误差。<br />
+			为了避免过拟合，我们需要给优化目标函数增加一个正则项，正则项应该包含模型的复杂度信息。对于决策树来说，其叶结点的数量|T|越多就越复杂，我们用添加正则项的$ C_\alpha(T_t)=Gini(T_t)+\alpha|T_t| $来作为优化的目标函数，也就是树的损失函数。参数α控制了两者之间的影响程度。较大的α促使选择较简单的模型(树)，较小的α促使选择较复杂的模型(树)。</p>
+			<p class="text-sty-banner">根据本例我们一共需要生成6棵子数，先对左下角的非叶节点进行剪枝操作，先设α=+∞，计算出$ C_\alpha(T)和\alpha_1 $</p>
+			<p>$ g(t)=\frac{C(t)-C(T_t))}{|T_t|-1} $</p>
+		</div>
+	</div>
+	<!-- //主要内容 -->
+
+	<!-- copyright bottom -->
+	<div class="copy-bottom bg-li py-4 border-top">
+		<div class="container-fluid">
+			<div class="d-md-flex px-md-3 position-relative text-center">
+				<!-- copyright -->
+				<div class="copy_right mx-md-auto mb-md-0 mb-3">
+					<p class="text-bl let">Copyright &copy; 2020.Company name All rights reserved.</p>
+				</div>
+				<!-- //copyright -->
+				<!-- move top icon -->
+				<a href="#home" class="move-top text-center">
+					<span class="fa fa-level-up" aria-hidden="true"></span>
+				</a>
+				<!-- //move top icon -->
+			</div>
+		</div>
+	</div>
+	<!-- //copyright bottom -->
+
+</body>
+
+</html>

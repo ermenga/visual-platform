@@ -523,7 +523,7 @@ li>a:only-child:after {
 p.text-sty-banner {
     font-size: 16px;
     color: #51585f;
-    max-width: 800px;
+    max-width: 1000px;
     margin: 20px 0;
 }
 
@@ -654,7 +654,6 @@ h2.title {
 a.button-w3ls {
     color: #705ecf;
     font-weight: 600;
-    font-size: 15px;
     display: inline-block;
     letter-spacing: 1px;
     -webkit-border-radius: 0px;

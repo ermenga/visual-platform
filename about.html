@@ -17,7 +17,7 @@
 		}
 	</script>
 	<!-- //Meta tag Keywords -->
-	
+	<script src="js/jquery-1.8.3.min.js"></script>
 	<!-- 看板娘 -->
 	<script type="text/javascript" charset="utf-8"  src="https://files.cnblogs.com/files/liuzhou1/L2Dwidget.0.min.js"></script>
 	<script type="text/javascript" charset="utf-8"  src="https://files.cnblogs.com/files/liuzhou1/L2Dwidget.min.js"></script>
@@ -29,9 +29,57 @@
             "position": "right",
             "hOffset": 0,
         	"vOffset": 0
-         }
-    });
+        	}
+    	});
+	    function play_music(){
+	    	var music = document.getElementById("musicfx");//获取音乐组件
+			if(music.paused){
+				music.play();
+				music.loop = true;
+				$('#mc_play').attr('class','on');
+			}else{
+				music.pause();
+				$('#mc_play').attr('class','stop');
+			}
+		}
 	</script>
+	<style type="text/css">
+		#live2dcanvas {
+			border: 0 !important;
+		}
+		.ermenga{
+			background-image: linear-gradient( 225deg, #FFA8A8 10%, #FCFF00 100%);
+			color: transparent !important;
+			-webkit-background-clip: text;
+		}
+		.jisi{
+			background-image: linear-gradient( 135deg, #F0FF00 10%, #58CFFB 100%);
+			color: transparent !important;
+			-webkit-background-clip: text;
+		}
+		.bl_ue{
+			background-image: linear-gradient( 180deg, #52E5E7 10%, #130CB7 100%);
+			color: transparent !important;
+			-webkit-background-clip: text;
+		}
+		*{margin:0px;padding:0px;}
+		body{background:#000;}
+		/* music */
+		@-webkit-keyframes reverseRotataZ{
+			0%{-webkit-transform: rotateZ(0deg);}
+			100%{-webkit-transform: rotateZ(-360deg);}
+		}
+		@-webkit-keyframes rotataZ{
+			0%{-webkit-transform: rotateZ(0deg);}
+			100%{-webkit-transform: rotateZ(360deg);}
+		}
+		#musicControl { position:fixed;right:10px;top:90px;margin-top:0;display:inline-block;z-index:10;}
+		#musicControl a { display:inline-block;width: 50px; height: 50px;overflow:hidden;background:url('images/mcbg.png') no-repeat;background-size:100%;}
+		#musicControl a audio{width:100%;height:56px;}
+		#musicControl a.stop { background-position:left bottom;}
+		#musicControl a.on { background-position:0px 1px;-webkit-animation: reverseRotataZ 1.2s linear infinite;}
+		#music_play_filter{width:100%;height:100%;overflow:hidden;position:fixed;top:0;left:0;z-index:9;}
+	</style>
 	<!-- //看板娘 -->
 	
 	<!-- Icon -->
@@ -52,6 +100,13 @@
 </head>
 
 <body>
+	<span id="musicControl">
+		<a id="mc_play" class="on" onclick="play_music();">
+			<audio id="musicfx" loop="loop" autoplay="autoplay">
+				<source src="http://music.163.com/song/media/outer/url?id=440353010.mp3" type="audio/mpeg">
+			</audio>
+		</a>
+	</span>
 	<!-- main banner  style="position:fixed;top:0;"-->
 	<div class="main-top" id="home">
 		<!-- header -->
@@ -81,6 +136,7 @@
 									<ul>
 										<li><a href="slr.html" class="drop-text">线性回归</a></li>
 										<li><a href="knn.html" class="drop-text">K近邻算法</a></li>
+										<li><a href="dt.html" class="drop-text">决策树</a></li>
 										<li><a href="faq.html" class="drop-text">常见问题</a></li>
 										<li><a href="#partners" class="drop-text">合作伙伴</a></li>
 										<li><a href="#team" class="drop-text">我们的团队</a></li>
@@ -124,11 +180,11 @@
 				<div class="col-lg-5 about-right-faq pr-5">
 					<h6>我们的故事</h6>
 					<h3 class="mt-2 mb-3">第一个网站</h3>
-					<p class="text-sty-banner">一群秃头程序员不知为何聚集在了一起，决定开发一个能帮助大家理解算法的网站。<br />我们都来自大连理工大学软件学院！</p>
-					<a href="https://baike.baidu.com/item/%E5%A4%A7%E8%BF%9E%E7%90%86%E5%B7%A5%E5%A4%A7%E5%AD%A6%E8%BD%AF%E4%BB%B6%E5%AD%A6%E9%99%A2" class="btn button-style mt-sm-5 mt-4" target="_blank">了解更多</a>
+					<p class="text-sty-banner">&emsp;&emsp;一群秃头程序员不知为何聚集在了一起，决定开发一个能帮助大家理解算法的网站。<br />&emsp;&emsp;我们都来自大连理工大学软件学院！</p>
+					<a href="https://baike.baidu.com/item/%E5%A4%A7%E8%BF%9E%E7%90%86%E5%B7%A5%E5%A4%A7%E5%AD%A6%E8%BD%AF%E4%BB%B6%E5%AD%A6%E9%99%A2" class="btn button-style" target="_blank">了解更多</a>
 				</div>
 				<div class="col-lg-7 welcome-right text-center mt-lg-0 mt-5">
-					<img src="images/dlut.jpg" alt="糟糕，图片加载不出来了。" title="DLUT" class="img-fluid" />
+					<img src="images/dlut.jpg" width="80%" alt="糟糕，图片加载不出来了。" title="DLUT" class="img-fluid" style="margin-top: 3em;"/>
 				</div>
 			</div>
 		</div>
@@ -142,11 +198,11 @@
 				<div class="col-lg-5 left-img-w3ls">
 					<img src="images/view0.jpg" alt="糟糕，图片加载不出来了。" class="img-fluid" />
 				</div>
-				<div class="col-lg-5 about-right-faq pr-5">
-					<div class="bott-w3ls mr-xl-5">
+				<div class="col-lg-5 about-right-faq pr-5" style="margin-left: 6em;">
+					<div class="bott-w3ls">
 						<h6>我们的特点</h6>
 						<h3 class="title-w3 text-bl mb-3 font-weight-bold">可视化平台</h3>
-						<p class="text-sty-banner">可视化主要旨在借助于图形化手段，清晰有效地传达与沟通信息。<br />为了有效地传达思想概念，美学形式与功能需要齐头并进，通过直观地传达关键的方面与特征，从而实现对于相当稀疏而又复杂的数据集的深入洞察。</p>
+						<p class="text-sty-banner">&emsp;&emsp;可视化主要旨在借助于图形化手段，清晰有效地传达与沟通信息。<br />&emsp;&emsp;为了有效地传达思想概念，美学形式与功能需要齐头并进，通过直观地传达关键的方面与特征，从而实现对于相当稀疏而又复杂的数据集的深入洞察。</p>
 					</div>
 				</div>
 			</div>
@@ -164,8 +220,9 @@
 					<div class="ab-content-inner">
 						<img src="images/k1.png" alt="糟糕，图片加载不出来了。" class="img-fluid">
 						<div class="ab-info-con">
-							<h4 class="text-team-w3">二萌啊</h4>
+							<h4 class="ermenga text-team-w3">二萌啊</h4>
 							<p>前端开发</p>
+							<p>后台开发</p>
 						</div>
 					</div>
 				</div>
@@ -173,8 +230,9 @@
 					<div class="ab-content-inner">
 						<img src="images/k3.png" alt="糟糕，图片加载不出来了。" class="img-fluid">
 						<div class="ab-info-con">
-							<h4 class="text-team-w3">BL丿<span style="color:blue">藍</span>丨UE</h4>
-							<p>后台开发</p>
+							<h4 class="text-team-w3">BL丿<span class="bl_ue">藍</span>丨UE</h4>
+							<p>算法分析</p>
+							<p>需求模拟</p>
 						</div>
 					</div>
 				</div>
@@ -182,8 +240,9 @@
 					<div class="ab-content-inner">
 						<img src="images/k2.png" alt="糟糕，图片加载不出来了。" class="img-fluid">
 						<div class="ab-info-con">
-							<h4 class="text-team-w3">祭司</h4>
-							<p>后台开发</p>
+							<h4 class="text-team-w3 jisi">祭司</h4>
+							<p>算法分析</p>
+							<p>需求模拟</p>
 						</div>
 					</div>
 				</div>

@@ -13,7 +13,7 @@
 			setTimeout(hideURLbar, 0);
 		}, false);
 		function hideURLbar() {
-			//window.scrollTo(0, 1);
+			window.scrollTo(0, 1);
 		}
 		//全局变量
 		window.qk = 3.57;
@@ -41,7 +41,6 @@
 			$input.attr('min', min)
 			.attr('max', max)
 			.attr('step', step);
-
 			$input.bind("input", function(e){
 				$input.attr('value', this.value);
 				$input.css( 'background', 'linear-gradient(to right, #059CFA, white ' + this.value + '%, white)' );
@@ -56,57 +55,24 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<style type="text/css">
-		input[type=range] {
-			-webkit-appearance: none;
-			width: 300px;
-			//border-radius: 10px; /*这个属性设置使填充进度条时的图形为圆角*/
-		}
-		input[type=range]:focus {
-			outline: none;
-		}
-		input[type=range]::-webkit-slider-thumb {
-			-webkit-appearance: none;
-			height: 25px;
-			width: 25px;
-			margin-top: -5px; /*使滑块超出轨道部分的偏移量相等*/
-			background: #ffffff; 
-			border-radius: 50%; /*外观设置为圆形*/
-			border: solid 0.125em rgba(205, 224, 230, 0.5); /*设置边框*/
-			box-shadow: 0 .125em .125em #3b4547; /*添加底部阴影*/
-		}
-		table
-		{
-			border-collapse: collapse;
-			margin: 0 auto;
-			width: 80%;
-			text-align: center;
-		}
-		table td, table th
-		{
-			border: 1px solid #cad9ea;
-			color: #666;
-			height: 30px;
-		}
-		table thead th
-		{
-			background-color: #CCE8EB;
-			width: 100px;
-		}
-		table tr:nth-child(odd)
-		{
-			background: #fff;
-		}
-		table tr:nth-child(even)
-		{
-			background: #F5FAFA;
-		}
-	</style>
-
+	<link rel="stylesheet" href="css/slider.css">
+	
 	<!-- Web-Fonts -->
 	<link href="http://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext"
 	rel="stylesheet">
 	<!-- //Web-Fonts -->
+	<!-- 引入MathJax -->
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+	    showProcessingMessages: false,messageStyle: "none",extensions: ["tex2jax.js"],jax: ["input/TeX", "output/HTML-CSS"],
+	    tex2jax: {
+	      inlineMath: [ ['$','$'], ["\\(","\\)"] ],displayMath: [ ['$$','$$'], ["\\[","\\]"] ],skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code', 'a', 'annotation', 'annotation-xml'],ignoreClass: 'crayon-.*'
+	    },'HTML-CSS': {showMathMenu: false}
+	  });
+	  MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+	</script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- //引入MathJax -->
 </head>
 
 <body>
@@ -139,6 +105,7 @@
 									<ul>
 										<li><a href="slr.html" class="drop-text">线性回归</a></li>
 										<li><a href="knn.html" class="drop-text">K近邻算法</a></li>
+										<li><a href="dt.html" class="drop-text">决策树</a></li>
 										<li><a href="faq.html" class="drop-text">常见问题</a></li>
 										<li><a href="about.html#partners" class="drop-text">合作伙伴</a></li>
 										<li><a href="about.html" class="drop-text">我们的团队</a></li>
@@ -192,7 +159,7 @@
 				<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
 					&emsp;&emsp;本文介绍的线性回归则是回归模型中最基础的一种，线性回归假设目标值与特征之间满足线性相关。
 					通过构建损失函数，求解损失函数最小时的θ1和θ0,从而得到回归直线：<br />
-				</p><h4 style="text-align:center;"><em>y’=θ1*x+θ0</em></h4>
+				</p><h4 style="text-align:center;"><em>$ y^,=\theta_1x+\theta_0 $</em></h4>
 				<h6>&emsp;（三）损失函数</h6>
 				<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
 					&emsp;&emsp;求解最佳参数，需要一个标准来对结果进行衡量，为此我们需要定量化一个目标函数式，使得计算机可以在求解过程中不断地优化。
@@ -237,125 +204,8 @@
 				<!-- 坐标系区域 -->
 				<div style="margin-left:22em;max-width:200px;">
 					<canvas id="canvas" class="canvas" style="background:url(movies/zbz.png)">你的浏览器不支持canvas</canvas>
-					<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-					<script type="text/javascript">
-						function init()
-						{
-							var canvas = document.getElementById('canvas');
-							canvas.width = 800;
-							canvas.height = 800;
-							var ctx = canvas.getContext('2d');
-							ctx.beginPath();
-							ctx.arc(173,551,2,0,2*Math.PI);
-							ctx.stroke();
-							ctx.beginPath();
-							ctx.arc(249,496,2,0,2*Math.PI);
-							ctx.stroke();
-							ctx.beginPath();
-							ctx.arc(325,420,2,0,2*Math.PI);
-							ctx.stroke();
-							ctx.beginPath();
-							ctx.arc(400,268,2,0,2*Math.PI);
-							ctx.stroke();
-							ctx.beginPath();
-							ctx.arc(476,116,2,0,2*Math.PI);
-							ctx.stroke();
-							ctx.beginPath();
-							ctx.arc(551,98,2,0,2*Math.PI);
-							ctx.stroke();
-							ctx.beginPath();
-							ctx.arc(627,79,2,0,2*Math.PI);
-							ctx.stroke();
-							var png = new Image();
-							png.src = './movies/zbz.png';
-							png.onload = function(){
-								ctx.drawImage(png,0,0);
-							}
-							ctx.beginPath();
-							ctx.moveTo(59,667);
-							ctx.lineTo(629,59);
-							ctx.strokeStyle = 'blue';
-							ctx.stroke();
-						}
-						function update(k,b)
-						{
-							var canvas = document.getElementById('canvas');
-							canvas.width = 800;
-							canvas.height = 800;
-							var ctx = canvas.getContext('2d');
-							ctx.strokeStyle = 'black';
-							ctx.beginPath();
-							ctx.arc(173,551,2,0,2*Math.PI);
-							ctx.stroke();
-							ctx.beginPath();
-							ctx.arc(249,496,2,0,2*Math.PI);
-							ctx.stroke();
-							ctx.beginPath();
-							ctx.arc(325,420,2,0,2*Math.PI);
-							ctx.stroke();
-							ctx.beginPath();
-							ctx.arc(400,268,2,0,2*Math.PI);
-							ctx.stroke();
-							ctx.beginPath();
-							ctx.arc(476,116,2,0,2*Math.PI);
-							ctx.stroke();
-							ctx.beginPath();
-							ctx.arc(551,98,2,0,2*Math.PI);
-							ctx.stroke();
-							ctx.beginPath();
-							ctx.arc(627,79,2,0,2*Math.PI);
-							ctx.stroke();
-							var img = new Image();
-							img.src = './movies/zbz.png';
-							img.onload = function(){
-								ctx.drawImage(img,0,0);
-							}
-							var bchange=97+(450-b)/10*38;
-							var kchange=173+(((460-b)/k-15)/5)*76;
-							ctx.strokeStyle = 'red';
-							ctx.beginPath();
-							ctx.moveTo(59,bchange);
-							ctx.lineTo(kchange,59);
-							ctx.stroke();
-						}
-						function clickButton(){ 
-							var k = document.getElementById("k").value
-							var b = document.getElementById("b").value;
-							k = Number(k);
-							b = Number(b);
-							window.qk = k;
-							window.qb = b;
-							window.bo = true;
-							update(k,b);
-						}
-						function clickReset(){
-							window.bo = false;
-							init();
-							$("#k").val("");
-							$("#b").val("");
-						}
-						if (!window.bo) {
-					init();//范例_蓝
-				} else {
-					update(window.qk,window.qb);
-				}
-				//滑条变量
-				function kchange() {
-					var vk = document.getElementById("krange").value;
-  					//document.getElementById('k').innerHTML = value;
-  					window.qk = vk;
-  					$("#k").val(vk);
-  					update(vk,window.qb);
-  				}
-  				function bchange() {
-  					var vb = document.getElementById("brange").value;
-  					//document.getElementById('b').innerHTML = value;
-  					window.qb = vb;
-  					$("#b").val(vb);
-  					update(window.qk,vb);
-  				}
-  			</script>
-  		</div>
+					
+  			</div>
   		<!-- 输入区域 -->
   		<div style="float:left;position:relative;left:80%;">
   			<div style="position:relative;left:-80%;margin-top:10em;">
@@ -393,7 +243,6 @@
   			</div>
   		</div>
   	</div>
-  	
   	<div class="what py-5">
   		<div class="container">
   			<p class="text-sty-banner" style="margin:1em 0em;max-width: 1200px;">
@@ -412,195 +261,7 @@
   <div class="container row" id="dw2">
   	<div style="margin-left:22em;max-width:200px;">
   		<canvas id="canva" class="canvas" style="background:url(movies/zbz.png)">你的浏览器不支持canvas</canvas>
-  		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  		<script type="text/javascript">
-  			function Init()
-  			{
-  				var canvas = document.getElementById("canva");
-  				canvas.width = 800;
-  				canvas.height = 800;
-  				var ctx = canvas.getContext('2d');
-  				ctx.beginPath();
-  				ctx.arc(173,551,2,0,2*Math.PI);
-  				ctx.stroke();
-  				ctx.beginPath();
-  				ctx.arc(249,496,2,0,2*Math.PI);
-  				ctx.stroke();
-  				ctx.beginPath();
-  				ctx.arc(325,420,2,0,2*Math.PI);
-  				ctx.stroke();
-  				ctx.beginPath();
-  				ctx.arc(400,268,2,0,2*Math.PI);
-  				ctx.stroke();
-  				ctx.beginPath();
-  				ctx.arc(476,116,2,0,2*Math.PI);
-  				ctx.stroke();
-  				ctx.beginPath();
-  				ctx.arc(551,98,2,0,2*Math.PI);
-  				ctx.stroke();
-  				ctx.beginPath();
-  				ctx.arc(627,79,2,0,2*Math.PI);
-  				ctx.stroke();
-  				var png = new Image();
-  				png.src = './movies/zbz.png';
-  				png.onload = function(){
-  					ctx.drawImage(png,0,0);
-  				}
-  				var k = 3.57;
-  				var b = 300;
-  				var bl = -3.5;
-  				var bchange=97+(450-b)/10*38;
-  				var kchange=173+(((460-b)/k-15)/5)*76;
-  				ctx.strokeStyle = 'blue';
-  				ctx.beginPath();
-  				ctx.moveTo(59,bchange);
-  				ctx.lineTo(703,bchange-5*k*38);
-  				ctx.stroke();
-  				
-  				ctx.strokeStyle = 'red';
-  				ctx.beginPath();
-            		ctx.moveTo(173,551);//1
-            		ctx.lineTo(173,bchange-(1.5*k*38+bl*k*7));
-            		ctx.stroke();
-            		ctx.beginPath();
-            		ctx.moveTo(249,496);//2
-            		ctx.lineTo(249,bchange-(2*k*38+bl*k*6));
-            		ctx.stroke();
-            		ctx.beginPath();
-            		ctx.moveTo(325,420);//3
-            		ctx.lineTo(325,bchange-(2.5*k*38+bl*k*5));
-            		ctx.stroke();
-            		ctx.beginPath();
-            		ctx.moveTo(400,268);//4
-            		ctx.lineTo(400,bchange-(3*k*38+bl*k*4));
-            		ctx.stroke();
-            		ctx.beginPath();
-            		ctx.moveTo(476,116);//5
-            		ctx.lineTo(476,bchange-(3.5*k*38+bl*k*3));
-            		ctx.stroke();
-            		ctx.beginPath();
-            		ctx.moveTo(551,98);//6
-            		ctx.lineTo(551,bchange-(4*k*38+bl*k*2));
-            		ctx.stroke();
-            		ctx.beginPath();
-					ctx.moveTo(627,79);//7
-					ctx.lineTo(627,bchange-(4.5*k*38+bl*k*1));
-					ctx.stroke();
-				}
-				function Update(k,b)
-				{
-					var canvas = document.getElementById("canva");
-					canvas.width = 800;
-					canvas.height = 800;
-					var ctx = canvas.getContext('2d');
-					ctx.strokeStyle = 'black';
-					ctx.beginPath();
-					ctx.arc(173,551,2,0,2*Math.PI);
-					ctx.stroke();
-					ctx.beginPath();
-					ctx.arc(249,496,2,0,2*Math.PI);
-					ctx.stroke();
-					ctx.beginPath();
-					ctx.arc(325,420,2,0,2*Math.PI);
-					ctx.stroke();
-					ctx.beginPath();
-					ctx.arc(400,268,2,0,2*Math.PI);
-					ctx.stroke();
-					ctx.beginPath();
-					ctx.arc(476,116,2,0,2*Math.PI);
-					ctx.stroke();
-					ctx.beginPath();
-					ctx.arc(551,98,2,0,2*Math.PI);
-					ctx.stroke();
-					ctx.beginPath();
-					ctx.arc(627,79,2,0,2*Math.PI);
-					ctx.stroke();
-					var img = new Image();
-					img.src = './movies/zbz.png';
-					img.onload = function(){
-						ctx.drawImage(img,0,0);
-					}
-					var bl = -3.5;
-					var bchange=97+(450-b)/10*38;
-					var kchange=173+(((460-b)/k-15)/5)*76;
-					ctx.strokeStyle = 'blue';
-					ctx.beginPath();
-					ctx.moveTo(59,bchange);
-					ctx.lineTo(703,bchange-5*k*38);
-					ctx.stroke();
-					
-					ctx.strokeStyle = 'red';
-					ctx.beginPath();
-            		ctx.moveTo(173,551);//1
-            		ctx.lineTo(173,bchange-(1.5*k*38+bl*k*7));
-            		ctx.stroke();
-            		ctx.beginPath();
-            		ctx.moveTo(249,496);//2
-            		ctx.lineTo(249,bchange-(2*k*38+bl*k*6));
-            		ctx.stroke();
-            		ctx.beginPath();
-            		ctx.moveTo(325,420);//3
-            		ctx.lineTo(325,bchange-(2.5*k*38+bl*k*5));
-            		ctx.stroke();
-            		ctx.beginPath();
-            		ctx.moveTo(400,268);//4
-            		ctx.lineTo(400,bchange-(3*k*38+bl*k*4));
-            		ctx.stroke();
-            		ctx.beginPath();
-            		ctx.moveTo(476,116);//5
-            		ctx.lineTo(476,bchange-(3.5*k*38+bl*k*3));
-            		ctx.stroke();
-            		ctx.beginPath();
-            		ctx.moveTo(551,98);//6
-            		ctx.lineTo(551,bchange-(4*k*38+bl*k*2));
-            		ctx.stroke();
-            		ctx.beginPath();
-					ctx.moveTo(627,79);//7
-					ctx.lineTo(627,bchange-(4.5*k*38+bl*k*1));
-					ctx.stroke();
-				}
-				function ClickButton(){ 
-					var k = document.getElementById("kk").value;
-					var b = document.getElementById("bb").value;
-					k = Number(k);
-					b = Number(b);
-					window.k = k;
-					window.b = b;
-					window.o = true;
-					Update(k,b);
-				}
-				function ClickReset(){
-					window.o = false;
-					Init();
-					$("#kk").val("");
-					$("#bb").val("");
-				}
-				if (!window.o) {
-					Init();//范例_蓝
-					$("#kk").val("3.57");
-					$("#bb").val("300");
-					window.k = 3.57;
-					window.b = 300;
-				} else {
-					Update(window.k,window.b);
-				}
-				//滑条变量
-				function kkchange() {
-					var vk = document.getElementById("kkrange").value;
-					vk = Number(vk);
-					window.k = vk;
-					$("#kk").val(vk);
-					Update(vk,window.b);
-				}
-				function bbchange() {
-					var vb = document.getElementById("bbrange").value;
-					vb = Number(vb);
-					window.b = vb;
-					$("#bb").val(vb);
-					Update(window.k,vb);
-				}
-			</script>
-		</div>
+	</div>
 		<!-- 输入区域 -->
 		<div style="float:left;position:relative;left:80%;">
 			<div style="position:relative;left:-80%;margin-top:10em;">
@@ -608,16 +269,22 @@
 					<label>斜率θ1</label>
 					<input class="form-control" id="kk" type="text" placeholder="3.57" name="kk" required="请输入一个数字">
 				</div>
-				<div class="from-group row"><br /><br />
-					<input id="kkrange" type="range" min="0" max="10" step="0.1" value="3.57" oninput="kkchange()" onpropertychange="kkchange()">
+				<div class="from-group row" style="position:relative;"><br /><br />
+					<div style="opacity:0.4;position:absolute;left:0px; top:17px;z-index:1;">
+						<input id="kkrange" type="range" min="0" max="10" step="0.1" value="3.57" oninput="kkchange()" onpropertychange="kkchange()">
+					</div>
+					<div style="position:absolute;left:0px; top:10px;z-index:-1;"><img src="images/range_bg.png" height="30px" width="100%" /></div>
 				</div>
 				<br /><br />
 				<div class="from-group row">
 					<label>截距θ0</label>
 					<input class="form-control" id="bb" type="text" placeholder="300" name="bb" required="请输入一个数字">
 				</div>
-				<div class="from-group row"><br /><br />
-					<input id="bbrange" type="range" min="280" max="430" step="1" value="300" oninput="bbchange()" onpropertychange="bbchange()">
+				<div class="from-group row" style="position:relative;"><br /><br />
+					<div style="opacity:0.4;position:absolute;left:0px; top:17px;z-index:1;">
+						<input id="bbrange" type="range" min="280" max="430" step="1" value="300" oninput="bbchange()" onpropertychange="bbchange()">
+					</div>
+					<div style="position:absolute;left:0px; top:10px;z-index:-1;"><img src="images/range_bg.png" height="30px" width="100%" /></div>
 				</div>
 				<br /><br />
 				<div class="row mt-3">
@@ -680,81 +347,8 @@
 		<div class="container row" id="dw3" style="max-width:1100px;margin-bottom:4em;">
 			<div style="margin-left:10em;margin-top:0em;max-width:430px;">
 				<canvas id="canv" class="canvas" width="1047px" height="610px" style="background:url(movies/ectx.png)">你的浏览器不支持canvas</canvas>
-				<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-				<script type="text/javascript">
-					function print_bg() {
-						var canvas = document.getElementById("canv");
-						var ctx = canvas.getContext('2d');
-						var ectx = new Image();
-						ectx.src = './movies/ectx.png';
-						ectx.onload = function(){
-							ctx.drawImage(ectx,0,0);
-						}
-					}
-					function Reset() {
-						var canvas = document.getElementById("canv");
-						var ctx = canvas.getContext('2d');
-						var ectx = new Image();
-						var kb = new Image();
-						ectx.src = './movies/ectx.png';
-						kb.src = './movies/kb.png'
-						kb.onload = function(){
-							ctx.drawImage(kb,0,0);
-							ctx.drawImage(ectx,0,0);
-						}
-						window.oo = true;
-						window.a = 0.01;
-						window.x = -3;
-						$("#kp").val("偏导数为 : \n横坐标为 : ")
-					}
-					function achange() {
-						var va = document.getElementById("arange").value;
-						window.a = va;
-						$("#a").val(va);
-					}
-					function xchange() {
-						var vx = document.getElementById("xrange").value;
-						window.x = vx;
-						$("#x").val(vx);
-					}
-					function cul_p() {
-						return Number(20 * window.x - 5.687);
-					}
-					function f(x) {
-						return Number(10 * x * x - 5.687 * x + 0.91)
-					}
-					function draw(xx) {
-						if(xx < -3 || xx > 3.5) { return; }
-						var x = (xx + 7) * 74.5 + 11;
-						var y = (100 - f(xx)) * 5.5 + 27.5;
-						var canvas = document.getElementById("canv");
-						var ctx = canvas.getContext('2d');
-						ctx.strokeStyle = 'blue';
-						ctx.beginPath();
-						ctx.arc(x,y,2,0,2*Math.PI);
-						ctx.stroke();
-					}
-					function cul() {
-						if(window.oo){
-							var aa = document.getElementById("a").value;
-							var xx = document.getElementById("x").value;
-							if(aa) {
-								window.a = aa;
-							}
-							if(xx) {
-								window.x = xx;
-							}
-							window.oo = false;
-						}
-					draw(window.x);//画图像
-					if(Math.abs( 20 * window.x - 5.687 ) >= 0.05) {
-						var xx = window.x - a * cul_p();
-						$("#kp").val("偏导数为 : " + Number(20 * window.x - 5.687) + "\n横坐标为 : " + window.x);
-						window.x = xx;
-					}
-				}
-			</script>
-		</div>
+				<script src="js/slr.js"></script>
+			</div>
 		<div style="float:left;position:relative;left:87%;">
 			<div style="position:relative;left:-80%;margin-top:2em;">
 				<div class="from-group row">
@@ -792,38 +386,24 @@
 				</div>
 			</div>
 		</div>
-		<!-- 视频 -->
-	<!--
-	<div style="text-align:center; margin: 3em 0em;">
-		<video width="1280" height="720" controls="controls">
-  			<source src="movies/slr.mp4" type="video/mp4" />
-  			<source src="movies/slr.ogg" type="video/ogg" />
-  			<source src="movies/slr.webm" type="video/webm" />
-  			<object data="movies/slr.mp4" width="1280" height="720">
-    		<embed src="movies/slrswf" width="1280" height="720" />
-  		</object>
-		</video>
-	</div>
--->
-
-<!-- copyright bottom -->
-<div class="copy-bottom bg-li py-4 border-top">
-	<div class="container-fluid">
-		<div class="d-md-flex px-md-3 position-relative text-center">
-			<!-- copyright -->
-			<div class="copy_right mx-md-auto mb-md-0 mb-3">
-				<p class="text-bl let">Copyright &copy; 2020.Company name All rights reserved.</p>
+	<!-- copyright bottom -->
+	<div class="copy-bottom bg-li py-4 border-top">
+		<div class="container-fluid">
+			<div class="d-md-flex px-md-3 position-relative text-center">
+				<!-- copyright -->
+				<div class="copy_right mx-md-auto mb-md-0 mb-3">
+					<p class="text-bl let">Copyright &copy; 2020.Company name All rights reserved.</p>
+				</div>
+				<!-- //copyright -->
+				<!-- move top icon -->
+				<a href="#home" class="move-top text-center">
+					<span class="fa fa-level-up" aria-hidden="true"></span>
+				</a>
+				<!-- //move top icon -->
 			</div>
-			<!-- //copyright -->
-			<!-- move top icon -->
-			<a href="#home" class="move-top text-center">
-				<span class="fa fa-level-up" aria-hidden="true"></span>
-			</a>
-			<!-- //move top icon -->
 		</div>
 	</div>
-</div>
-<!-- //copyright bottom -->
+	<!-- //copyright bottom -->
 
 </body>
 

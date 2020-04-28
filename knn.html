@@ -13,7 +13,7 @@
 			setTimeout(hideURLbar, 0);
 		}, false);
 		function hideURLbar() {
-			//window.scrollTo(0, 1);
+			window.scrollTo(0, 1);
 		}
 		window.x = 0;
 		window.y = 3;
@@ -52,59 +52,58 @@
 		window.ax[27]=-0.87946521;window.ay[27]=1.41363327;z[27]=0;
 		window.ax[28]=-0.01690934;window.ay[28]=4.25699912;z[28]=2;
 		window.ax[29]=-0.75167722;window.ay[29]=4.46649421;z[29]=2;
+		window.purple=0;window.yellow=0;window.green=0;
 	</script>
-			<!-- //Meta tag Keywords -->
-
-
-			<link rel="icon" href="images/logo-f.png" sizes="64x64">
-			<link rel="stylesheet" href="css/bootstrap.css">
-			<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
-			<link href="css/font-awesome.min.css" rel="stylesheet">
-			<style type="text/css">
-				input[type=range] {
-					-webkit-appearance: none;
-					width: 300px;
-					//border-radius: 10px; /*这个属性设置使填充进度条时的图形为圆角*/
-				}
-				input[type=range]:focus {
-					outline: none;
-				}
-				input[type=range]::-webkit-slider-thumb {
-					-webkit-appearance: none;
-					height: 25px;
-					width: 25px;
-					margin-top: -5px; /*使滑块超出轨道部分的偏移量相等*/
-					background: #ffffff; 
-					border-radius: 50%; /*外观设置为圆形*/
-					border: solid 0.125em rgba(205, 224, 230, 0.5); /*设置边框*/
-					box-shadow: 0 .125em .125em #3b4547; /*添加底部阴影*/
-				}
-				table
-				{
-					border-collapse: collapse;
-					margin: 0 auto;
-					width: 80%;
-					text-align: center;
-				}
-				table td, table th
-				{
-					border: 1px solid #cad9ea;
-					color: #666;
-					height: 30px;
-				}
-				table thead th
-				{
-					background-color: #CCE8EB;
-					width: 100px;
-				}
-				table tr:nth-child(odd)
-				{
-					background: #fff;
-				}
-				table tr:nth-child(even)
-				{
-					background: #F5FAFA;
-				}
+	<!-- //Meta tag Keywords -->
+	<link rel="icon" href="images/logo-f.png" sizes="64x64">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<style type="text/css">
+	input[type=range] {
+		-webkit-appearance: none;
+		width: 300px;
+		//border-radius: 10px; /*这个属性设置使填充进度条时的图形为圆角*/
+	}
+	input[type=range]:focus {
+		outline: none;
+	}
+	input[type=range]::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		height: 25px;
+		width: 25px;
+		margin-top: -5px; /*使滑块超出轨道部分的偏移量相等*/
+		background: #ffffff; 
+		border-radius: 50%; /*外观设置为圆形*/
+		border: solid 0.125em rgba(205, 224, 230, 0.5); /*设置边框*/
+		box-shadow: 0 .125em .125em #3b4547; /*添加底部阴影*/
+	}
+	table
+	{
+		border-collapse: collapse;
+		margin: 0 auto;
+		width: 80%;
+		text-align: center;
+	}
+	table td, table th
+	{
+		border: 1px solid #cad9ea;
+		color: #666;
+		height: 30px;
+	}
+	table thead th
+	{
+		background-color: #CCE8EB;
+		width: 100px;
+	}
+	table tr:nth-child(odd)
+	{
+		background: #fff;
+	}
+	table tr:nth-child(even)
+	{
+		background: #F5FAFA;
+	}
 	/*
 	pre {
 	    margin: 0 0 24px;
@@ -143,7 +142,7 @@
 	<div class="main-top" id="home">
 		<!-- header -->
 		<header>
-			<div class="container-fluid">
+			<div class="container-fix">
 				<div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
 					<!-- logo -->
 					<div id="logo">
@@ -153,21 +152,22 @@
 					<!-- nav -->
 					<div class="nav_w3ls">
 						<nav>
-							<label for="drop" class="toggle">Menu</label>
+							<label for="drop" class="toggle">菜单</label>
 							<input type="checkbox" id="drop" />
 							<ul class="menu">
 								<li><a href="index.html">主页</a></li>
 								<li><a href="about.html">关于我们</a></li>
-								<li><a href="pricing.html">K近邻算法</a></li>
+								<li><a href="pricing.html">空白</a></li>
 								<li>
 									<!-- First Tier Drop Down -->
 									<label for="drop-2" class="toggle toogle-2">导航 <span class="fa fa-angle-down" aria-hidden="true"></span>
 									</label>
-									<a href="#" class="active">导航 <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+									<a href="#" class="active"><strong>导航 </strong><span class="fa fa-angle-down" aria-hidden="true"></span></a>
 									<input type="checkbox" id="drop-2" />
 									<ul>
 										<li><a href="slr.html" class="drop-text">线性回归</a></li>
 										<li><a href="knn.html" class="drop-text">K近邻算法</a></li>
+										<li><a href="dt.html" class="drop-text">决策树</a></li>
 										<li><a href="faq.html" class="drop-text">常见问题</a></li>
 										<li><a href="about.html#partners" class="drop-text">合作伙伴</a></li>
 										<li><a href="about.html" class="drop-text">我们的团队</a></li>
@@ -203,10 +203,12 @@
 		<!-- //banner -->
 	</div>
 	<!-- //main banner -->
+	<h3 style="font-size:4rem;font-weight:600;color:#202428;text-align:center;">K近邻算法</h3>
 	<div class="what py-5">
 		<div class="container">
+			<p class="text-sty-banner">K近邻算法是一种不准确的分类算法，我们通过一定量的训练集进行训练，最终可以判断新数据的类别。</p>
 			<p class="text-sty-banner">首先生成一个训练集(数据集)，生成方式如下代码：(此例生成30个数据，即N=30)</p>
-			<div style="background: #fafafa; width: 50%; margin-left: 25%;">
+			<div style="background: #fafafa; width: 70%;margin:2em 0em;">
 				<code style="background: #fafafa;">
 					<div style="overflow:auto; white-space:nowrap; width: 100%;">
 						from sklearn.datasets import make_blobs<br />
@@ -219,10 +221,14 @@
 					</div>
 				</code>
 			</div>
+			<p class="text-sty-banner">本例训练集共三类，可简单记做紫类、绿类和黄类，每个数据都有两个属性，例如高度、半径和重量等。现在我们用坐标系的形式展现训练集和需要进行判断的新数据(蓝色)。</p>
+			<p class="text-sty-banner">首先我们测量出新数据的属性，再把它绘制在刚才的坐标系中，选择一个合适的K值(找K个与新数据点最近的点)，最后我们在这K个点中寻找，认为新数据属于K个点中占比最多的那一类。</p><br />
+			<p class="text-sty-banner">下面是一个实例，大家可以自行改变新数据的属性和K值，体会一下算法的实现方式。</p>
+			<p class="text-sty-banner" style="padding:0px; margin:0px;display: inline;">K近邻算法判断结果：</p><strong><p class="text-sty-banner" id="pCh" style="padding:0px; margin:0px;display: inline;">新数据属于黄类。</p></strong>
 		</div>
 	</div>
 
-	<div class="container row" id="dw" style="margin:5em 0em">
+	<div class="container row" style="margin-bottom: 3em;" id="dw">
 		<div style="margin-left:22em;max-width:200px;">
 			<canvas id="canva" class="canvas" style="background:url(movies/knn1.png)">你的浏览器不支持canvas</canvas>
 			<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -262,16 +268,20 @@
 							}
 						}
 					}
+					window.purple=0;window.yellow=0;window.green=0;
 					for(m=0;m<time;m++){
 						if(z[minpos[m]]==0){
 							ctx.strokeStyle = 'black';
 							ctx.fillStyle = 'black';
+							window.purple += 1;
 						}else if(z[minpos[m]]==2){
 							ctx.strokeStyle = 'yellow';
 							ctx.fillStyle = 'yellow';
+							window.yellow += 1;
 						}else{
 							ctx.strokeStyle = 'green';
 							ctx.fillStyle = 'green';
+							window.green += 1;
 						}
 						ctx.beginPath();
 						ctx.moveTo(xcg(vx),ycg(vy));
@@ -282,6 +292,19 @@
 					ctx.beginPath();
 					ctx.arc(xcg(vx),ycg(vy),d[minpos[time-1]]*100,0,2*Math.PI);
 					ctx.stroke();
+					if(window.purple > window.yellow){
+						if(window.purple > window.green){
+    						document.getElementById("pCh").innerText= "新数据为紫类。"; 
+						}else{
+							document.getElementById("pCh").innerText= "新数据为绿类。"; 
+						}
+					}else{
+						if(window.yellow > window.green){
+							document.getElementById("pCh").innerText= "新数据为黄类。"; 
+						}else{
+							document.getElementById("pCh").innerText= "新数据为绿类。"; 
+						}
+					}
 	    			//return d[minpos[time-1]]*100;//返回一个最长距离(注意比例)
 	    		}
 	    		function Init(){
