@@ -2,8 +2,9 @@
 <html lang="zxx">
 
 <head>
-	<title>Faq's</title>
+	<title>常见问题</title>
 	<!-- Meta tag Keywords -->
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8" />
 	<meta name="keywords" content="" />
@@ -30,8 +31,7 @@
 	<!-- //Custom-Files -->
 
 	<!-- Web-Fonts -->
-	<link href="http://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext"
-	 rel="stylesheet">
+	<link rel="stylesheet" href="css/fonts.googleapis.com.css">
 	<!-- //Web-Fonts -->
 </head>
 
@@ -40,7 +40,7 @@
 	<div class="main-top" id="home">
 		<!-- header -->
 		<header>
-			<div class="container-fluid">
+			<div class="container-fix">
 				<div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-0">
 					<!-- logo -->
 					<div id="logo">
@@ -50,29 +50,28 @@
 					<!-- nav -->
 					<div class="nav_w3ls">
 						<nav>
-							<label for="drop" class="toggle">Menu</label>
+							<label for="drop" class="toggle">菜单</label>
 							<input type="checkbox" id="drop" />
 							<ul class="menu">
-								<li><a href="index.html">Home</a></li>
-								<li><a href="about.html">About Us</a></li>
-								<li><a href="pricing.html">Pricing</a></li>
+								<li><a href="index.html">主页</a></li>
+								<li><a href="about.html">关于我们</a></li>
+								<li><a href="tool.html">小工具</a></li>
 								<li>
 									<!-- First Tier Drop Down -->
-									<label for="drop-2" class="toggle toogle-2">Dropdown <span class="fa fa-angle-down" aria-hidden="true"></span>
+									<label for="drop-2" class="toggle toogle-2">导航 <span class="fa fa-angle-down" aria-hidden="true"></span>
 									</label>
-									<a href="#" class="active">Dropdown <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+									<a href="#" class="active"><strong>导航 </strong><span class="fa fa-angle-down" aria-hidden="true"></span></a>
 									<input type="checkbox" id="drop-2" />
 									<ul>
-										<li><a href="#services" class="drop-text">服务</a></li>
+										<li><a href="slr.html" class="drop-text">线性回归</a></li>
+										<li><a href="knn.html" class="drop-text">K近邻算法</a></li>
+										<li><a href="dt.html" class="drop-text">决策树</a></li>
 										<li><a href="faq.html" class="drop-text">常见问题</a></li>
-										<li><a href="404.html" class="drop-text">错误</a></li>
-										<li><a href="#stats" class="drop-text">统计</a></li>
-										<li><a href="about.html" class="drop-text">我们的优势</a></li>
-										<li><a href="about.html" class="drop-text">我们的团队</a></li>
-										<li><a href="#partners" class="drop-text">合作伙伴</a></li>
+										<li><a href="about.html#partners" class="drop-text">合作伙伴</a></li>
+										<li><a href="about.html#team" class="drop-text">我们的团队</a></li>
 									</ul>
 								</li>
-								<li><a href="contact.html">Contact Us</a></li>
+								<li><a href="contact.html">联系我们</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -95,8 +94,8 @@
 		<!-- banner -->
 		<div class="banner_w3lspvt-2">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="index.html" class="font-weight-bold">Home</a></li>
-				<li class="breadcrumb-item" aria-current="page">Faq's</li>
+				<li class="breadcrumb-item"><a href="index.html">主页</a></li>
+				<li class="breadcrumb-item" aria-current="page">常见问题</li>
 			</ol>
 		</div>
 		<!-- //banner -->
@@ -108,23 +107,20 @@
 		<div class="container pb-xl-5 pb-lg-3">
 			<div class="row py-xl-4">
 				<div class="col-lg-6 welcome-right text-center mb-lg-0 mb-5">
-					<img src="images/faq.png" alt="" class="img-fluid" />
+					<img src="images/faq.jpg" width="80%" class="img-fluid" />
 				</div>
 				<div class="col-lg-6 about-right-faq">
-					<h3 class="mt-2 mb-3">Frequently asked questions</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse porta erat sit.</p>
-					<p class="mt-3">Suspendisse porta erat sit amet eros sagittis, quis hendrerit libero aliquam. Fusce semper augue
-						ac dolor
-						efficitur.</p>
-					<a href="about.html" class="btn button-style mt-sm-5 mt-4">Read More</a>
+					<h3 class="mt-2 mb-3">常见问题解答</h3>
+					<p>您可能在使用本网站时遇到一些问题，我们会对一些基本问题进行解答。</p>
+					<p class="mt-3">当然你也可以点击下方的联系我们，为本站提供宝贵的建议，或是询问相关问题。</p>
+					<a href="contact.html" class="btn button-style mt-sm-5 mt-4">联系我们</a>
 				</div>
 			</div>
 			<!-- accordions -->
 			<ul class="accordion css-accordion mt-5">
 				<li class="accordion-item">
 					<input class="accordion-item-input" type="checkbox" name="accordion" id="item1" />
-					<label for="item1" class="accordion-item-hd">At vero eos et accusamus et iusto odio dignissimos ducimus <span
-						 class="accordion-item-hd-cta">&#9650;</span></label>
+					<label for="item1" class="accordion-item-hd">问题一<span class="accordion-item-hd-cta">&#9650;</span></label>
 					<div class="accordion-item-bd">
 						<h6 class="accordion-textm">AmetLorem ipsum dolor sit amet</h6>
 						<p>Sodales quis.At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit ametLorem ipsum
@@ -134,7 +130,7 @@
 				</li>
 				<li class="accordion-item">
 					<input class="accordion-item-input" type="checkbox" name="accordion" id="item2" />
-					<label for="item2" class="accordion-item-hd">Lorem ipsum dolor sit amet <span class="accordion-item-hd-cta">&#9650;</span></label>
+					<label for="item2" class="accordion-item-hd">问题二<span class="accordion-item-hd-cta">&#9650;</span></label>
 					<div class="accordion-item-bd">
 						<h6 class="accordion-textm">Dolores et ea rebum lorem ipsum</h6>
 						<p>Duo dolores et ea rebum. Lorem ipsum dolor sit ametLorem ipsum
@@ -144,8 +140,7 @@
 				</li>
 				<li class="accordion-item">
 					<input class="accordion-item-input" type="checkbox" name="accordion" id="item3" />
-					<label for="item3" class="accordion-item-hd">Tque corrupti quos dolores et quas molestias excepturi sint occaecati
-						<span class="accordion-item-hd-cta">&#9650;</span></label>
+					<label for="item3" class="accordion-item-hd">问题三<span class="accordion-item-hd-cta">&#9650;</span></label>
 					<div class="accordion-item-bd">
 						<h6 class="accordion-textm">At vero eos et accusam et</h6>
 						<p>sodales quis. At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit ametLorem ipsum
@@ -155,7 +150,7 @@
 				</li>
 				<li class="accordion-item">
 					<input class="accordion-item-input" type="checkbox" name="accordion" id="item4" />
-					<label for="item4" class="accordion-item-hd">Dolores et quas molestias excepturi sint occaecati <span class="accordion-item-hd-cta">&#9650;</span></label>
+					<label for="item4" class="accordion-item-hd">问题四<span class="accordion-item-hd-cta">&#9650;</span></label>
 					<div class="accordion-item-bd">
 						<h6 class="accordion-textm">Lorem ipsum dolor sit amet</h6>
 						<p>Sodales quis at vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit ametLorem ipsum
@@ -169,62 +164,13 @@
 	</div>
 	<!-- //faq -->
 
-	<!-- footer -->
-	<footer class="bg-li py-5">
-		<div class="container py-xl-5 py-lg-3">
-			<!-- subscribe -->
-			<div class="subscribe mx-auto">
-				<div class="icon-effect-w3">
-					<span class="fa fa-envelope"></span>
-				</div>
-				<h2 class="tittle text-center font-weight-bold">Stay Updated!</h2>
-				<p class="sub-tittle text-center mt-3 mb-sm-5 mb-4">Sed do eiusmod tempor incididunt ut labore et dolore magna
-					aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
-				<form action="#" method="post" class="subscribe-wthree pt-2">
-					<div class="d-flex subscribe-wthree-field">
-						<input class="form-control" type="email" placeholder="Enter your email..." name="email" required="">
-						<button class="btn form-control w-50" type="submit">Subscribe</button>
-					</div>
-				</form>
-			</div>
-			<!-- //subscribe -->
-		</div>
-	</footer>
-	<!-- //footer -->
 	<!-- copyright bottom -->
 	<div class="copy-bottom bg-li py-4 border-top">
 		<div class="container-fluid">
 			<div class="d-md-flex px-md-3 position-relative text-center">
-				<!-- footer social icons -->
-				<div class="social-icons-footer mb-md-0 mb-3">
-					<ul class="list-unstyled">
-						<li>
-							<a href="#">
-								<span class="fa fa-facebook"></span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<span class="fa fa-twitter"></span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<span class="fa fa-google-plus"></span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<span class="fa fa-instagram"></span>
-							</a>
-						</li>
-					</ul>
-				</div>
-				<!-- //footer social icons -->
 				<!-- copyright -->
 				<div class="copy_right mx-md-auto mb-md-0 mb-3">
-					<p class="text-bl let">Copyright &copy; 2020.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
-					</p>
+					<p class="text-bl let">Copyright &copy; 2020.Company name All rights reserved.</p>
 				</div>
 				<!-- //copyright -->
 				<!-- move top icon -->
@@ -236,7 +182,5 @@
 		</div>
 	</div>
 	<!-- //copyright bottom -->
-
 </body>
-
 </html>

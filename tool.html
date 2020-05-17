@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+	<title>小工具</title>
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+	<!-- Meta tag Keywords -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8" />
+	<meta name="keywords" content="" />
+	<script src="js/jquery-1.8.3.min.js"></script>
+	<script>
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+	    showProcessingMessages: false,messageStyle: "none",extensions: ["tex2jax.js"],jax: ["input/TeX", "output/HTML-CSS"],
+	    tex2jax: {
+	      inlineMath: [ ['$','$'], ["\\(","\\)"] ],displayMath: [ ['$$','$$'], ["\\[","\\]"] ],skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code', 'a', 'annotation', 'annotation-xml'],ignoreClass: 'crayon-.*'
+	    },'HTML-CSS': {showMathMenu: false}
+	  });
+	  MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+	</script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- //引入MathJax -->
+
+	<!-- //Meta tag Keywords -->
+	
+	<!-- Icon -->
+	<link rel="icon" href="images/logo-f.png" sizes="64x64">
+	<!-- Custom-Files -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Bootstrap-Core-CSS -->
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+	<!-- Style-CSS -->
+	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<!-- Font-Awesome-Icons-CSS -->
+	<!-- //Custom-Files -->
+	<link rel="stylesheet" href="css/rangeslider.css">
+	<!-- Web-Fonts -->
+	<link rel="stylesheet" href="css/fonts.googleapis.com.css">
+	<!-- //Web-Fonts -->
+</head>
+
+<body>
+	<!-- main banner -->
+	<div class="main-top" id="home">
+		<!-- header -->
+		<header>
+			<div class="container-fix">
+				<div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
+					<!-- logo -->
+					<div id="logo">
+						<h1><a href="index.html"><img src="images/logo.png" alt="" class="img-fluid" />云旗</a></h1>
+					</div>
+					<!-- //logo -->
+					<!-- nav -->
+					<div class="nav_w3ls">
+						<nav>
+							<label for="drop" class="toggle">Menu</label>
+							<input type="checkbox" id="drop" />
+							<ul class="menu">
+								<li><a href="index.html">主页</a></li>
+								<li><a href="about.html">关于我们</a></li>
+								<li><a href="pricing.html" class="active"><strong>小工具</strong></a></li>
+								<li>
+									<!-- First Tier Drop Down -->
+									<label for="drop-2" class="toggle toogle-2">导航 <span class="fa fa-angle-down" aria-hidden="true"></span>
+									</label>
+									<a href="#">导航 <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+									<input type="checkbox" id="drop-2" />
+									<ul>
+										<li><a href="slr.html" class="drop-text">线性回归</a></li>
+										<li><a href="knn.html" class="drop-text">K近邻算法</a></li>
+										<li><a href="dt.html" class="drop-text">决策树</a></li>
+										<li><a href="faq.html" class="drop-text">常见问题</a></li>
+										<li><a href="about.html#partners" class="drop-text">合作伙伴</a></li>
+										<li><a href="about.html#team" class="drop-text">我们的团队</a></li>
+									</ul>
+								</li>
+								<li><a href="contact.html">联系我们</a></li>
+							</ul>
+						</nav>
+					</div>
+					<!-- //nav -->
+					<div class="d-flex mt-lg-1 mt-sm-2 mt-3 justify-content-center">
+						<!-- 搜索 -->
+						<div class="search-w3layouts mr-3">
+							<form action="#" method="post" class="search-bottom-wthree d-flex">
+								<input class="search" type="search" placeholder="站内搜索..." required="">
+								<button class="form-control btn" type="submit"><span class="fa fa-search"></span></button>
+							</form>
+						</div>
+						<!-- //搜索 -->
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- //header -->
+		<!-- banner -->
+		<div class="banner_w3lspvt-2">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="index.html">主页</a></li>
+				<li class="breadcrumb-item" aria-current="page">小工具</li>
+			</ol>
+		</div>
+		<!-- //banner -->
+	</div>
+	<!-- //main banner -->
+
+	<!-- 坐标系 -->
+	<div class="container py-xl-5 py-lg-3" id="funct">
+	<h5 style="margin-bottom: 1em;">函数绘制器</h5>
+		<div style="text-align: center;float: left;width:60%;height: 510px">
+			<canvas id="canvas" class="canvas" width="520" height="520">你的浏览器不支持canvas</canvas>
+			<script type="text/javascript" src="js/tool.js"></script>
+			<script type="text/javascript">window.a=null;window.b=null;Initialization();</script>
+		</div>
+		<div style="margin-left:5%; width:95%;height: 510px">
+			<p class="text-sty-banner" style="max-width: 1200px;">支持输入:<br />
+			E,PI&nbsp;——&nbsp;自然对数e,圆周率π<br />
+			abs()&nbsp;——&nbsp;绝对值|&nbsp;|<br />
+			sin(),cos(),tan()&nbsp;——&nbsp;三角函数<br />
+			arcs(),arcc(),arct()&nbsp;——&nbsp;反三角函数<br />
+			xp(x),ln(x)&nbsp;——&nbsp;e的指数$ e^x $,以e为底x的对数<br />
+			pow(x,y),sqrt(x)&nbsp;——&nbsp;x的y次幂$ x^y $,平方根$ \sqrt{x} $<br />
+			min(x,y),max(x,y)&nbsp;——&nbsp;x,y中的极小值极大值<br />
+			+-*/()&nbsp;——&nbsp;加减乘除以及英文括号逗号<br />
+			例如:<br />max(abs(ln(x*x)),pow(x-2,3))<br />tan(cos(x)+ln(x*(x-1)))</p>
+			<input class="form-control" type="text" id="func_g" style="color:#2CAC67;width: 27%;display: inline;margin: 0em 1em 1em 0em;" placeholder="请函数表达式" /><button class="btn button-style button-style-2" style="padding: 8px 25px;" onclick="set('g')">绘制</button>
+			<input class="form-control" type="text" id="func_r" style="color:#FA5858;width: 27%;display: inline;margin-right: 1em;" placeholder="请函数表达式" /><button class="btn button-style button-style-2" style="padding: 8px 25px;" onclick="set('r')">绘制</button>
+		</div>
+	</div>
+	<!-- //坐标系 -->
+
+	<!-- 对数幂指数 -->
+	<div class="bg-li py-5" id="eindex">
+		<div class="container py-xl-5 py-lg-3">
+			<h5>任意对数计算</h5>
+			<p class="text-sty-banner">计算公式为$ y=log_a^N $</p>
+			<input class="form-control" id="a" type="text" placeholder="请输入底数a" required="required" style="width: 20%;display:inline;" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" /><button class="btn button-style button-style-2" style="padding: 8px 25px;margin: 0em 2em;" onclick="a_e()">底数乘E</button>
+			<input class="form-control" id="N" type="text" placeholder="请输入真数N" required="required" style="width: 20%;display:inline;" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" /><button class="btn button-style button-style-2" style="padding: 8px 25px;margin: 0em 2em;" onclick="N_e()">真数乘E</button>
+			<button class="btn button-style button-style-2" style="padding: 8px 25px;" onclick="log_calculate()">计算</button><p class="text-sty-banner" id="result">结果为：</p><br />
+			<h5>幂指数计算</h5>
+			<p class="text-sty-banner">计算公式为$ y=a^n $</p>
+			<input class="form-control" id="b" type="text" placeholder="请输入底数a" required="required" style="width: 20%;display:inline;" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}|-\d{1,}|-\d{1,}\.\d{1,}]/g,'')" /><button class="btn button-style button-style-2" style="padding: 8px 25px;margin: 0em 2em;" onclick="b_e()">底数乘E</button>
+			<input class="form-control" id="n" type="text" placeholder="请输入指数n" required="required" style="width: 20%;display:inline;" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}|-\d{1,}|-\d{1,}\.\d{1,}]/g,'')" /><button class="btn button-style button-style-2" style="padding: 8px 25px;margin: 0em 2em;" onclick="n_e()">指数乘E</button>
+			<button class="btn button-style button-style-2" style="padding: 8px 25px;" onclick="index_calculate()">计算</button><p class="text-sty-banner" id="Result">结果为：</p>
+		</div>
+	</div>
+	<!-- //对数幂指数 -->
+
+	<!-- T分布表计算 -->
+	<div class="container py-xl-5 py-lg-3" id="tlist">
+		<div class="container py-xl-5 py-lg-3">
+			<h5>T分布表计算</h5>
+			<p class="text-sty-banner">计算公式为$ f(x)=\frac {\Gamma(\frac {n+1}2)}{\sqrt {n\pi}\Gamma(\frac n2)}(1+\frac {x^2}n)^{-\frac {n+1}2} $</p>
+			<p class="text-sty-banner" style="display: inline;">计算项目：</p>
+			<input class="form-control" style="width:25%;display:inline;margin-bottom:2em;" id="type" type="text" list="list" onclick="type_clear()" oninput="type_text()"><br />
+			<datalist id="list">
+				<option>计算分布函数的值</option>
+				<option>计算分布函数的反函数的值</option>
+				<option>计算上a分位点</option>
+				<option>计算双侧a分位点</option>
+			</datalist>
+			<p class="text-sty-banner" style="display: inline;">自由度n：</p>
+			<input class="form-control" id="nn" type="text" required="required" style="width: 20%;display:inline;margin-right:2em;" onkeyup="value=value.replace(/[^\d{1,}]/g,'')" />
+			<p class="text-sty-banner" style="display: inline;" id="x_text">变量值x：</p>
+			<input class="form-control" id="xx" type="text" required="required" style="width: 20%;display:inline;margin-right:2em;" onkeyup="value=value.replace(/[^\d{1,}]/g,'')" />
+			<button class="btn button-style button-style-2" style="padding: 8px 25px;" onclick="calc()">计算</button><p class="text-sty-banner" id="T_resu">结果为：</p><br />
+		</div>
+	</div>
+	<!-- //T分布表计算 -->
+
+	<!-- 聊天机器人 -->
+	<div class="bg-li py-5">
+		<div class="container py-xl-5 py-lg-3">
+		<h5>图灵聊天机器人</h5><br />
+			<div style="text-align: center; height: 400px;">
+				<div class="form">
+					<input class="form-control" style="width: 30%;display:inline;margin-right: 3em;" type="text" id="send_tx"/>
+					<input class="btn button-style button-style-2" style="padding: 8px 25px;" type="submit" value="发送" onclick="submit_bt()"/><br />
+					<p class="text-sty-banner" style="text-align: center;">小奇：<span id = "xiaoqi">说点什么吧！</span></p>
+					<div id="bdtts_div_id">
+						<audio id="tts_autio_id" autoplay="autoplay">
+						<source id="tts_source_id" type="audio/mpeg">
+						<embed id="tts_embed_id" height="0" width="0" src="">
+					</audio>
+					</div>
+					<script type="text/javascript">
+						function submit_bt(){
+							$.ajax({
+									async:false,
+									url:"http://www.tuling123.com/openapi/api?key=0ad94ab8728646849c2008f791412f7c"+"&info="+document.getElementById("send_tx").value+"&userid=613355",
+									method:"post",
+									success:function(data){
+										var str = JSON.parse(data).text;
+										document.getElementById("xiaoqi").innerText = str;
+										document.getElementById("send_tx").value = "";
+										read(str);//语音合成
+										//doTTS(str);//百度接口语音合成
+									}
+								})
+						}
+						function doTTS(text) {
+							var ttsDiv = document.getElementById('bdtts_div_id');
+							var ttsAudio = document.getElementById('tts_autio_id');		
+							ttsDiv.removeChild(ttsAudio);
+							var sss = '<source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&per=1&spd=5&text=' + text + '" type="audio/mpeg">';
+							ttsDiv.innerHTML = '<audio id="tts_autio_id" autoplay="autoplay">' + sss + '<embed id="tts_embed_id" height="0" width="0" src="">' + '</audio>';
+							ttsAudio = document.getElementById('tts_autio_id');
+							ttsAudio.play();
+						}
+						function read(text) {
+							var utterThis = new window.SpeechSynthesisUtterance(text);
+							window.speechSynthesis.speak(utterThis);
+						}
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //聊天机器人 -->
+
+	<!-- 视频 -->
+	<!--
+	<div style="text-align:center; margin: 3em 0em;">
+		<video width="1280" height="720" controls="controls">
+  			<source src="movies/slr.mp4" type="video/mp4" />
+  			<source src="movies/slr.ogg" type="video/ogg" />
+  			<source src="movies/slr.webm" type="video/webm" />
+  			<object data="movies/slr.mp4" width="1280" height="720">
+    		<embed src="movies/slrswf" width="1280" height="720" />
+  		</object>
+		</video>
+	</div>
+	-->
+	<!-- copyright bottom -->
+	<div class="copy-bottom bg-li py-4 border-top">
+		<div class="container-fluid">
+			<div class="d-md-flex px-md-3 position-relative text-center">
+				<!-- copyright -->
+				<div class="copy_right mx-md-auto mb-md-0 mb-3">
+					<p class="text-bl let">Copyright &copy; 2020.Company name All rights reserved.</p>
+				</div>
+				<!-- //copyright -->
+				<!-- move top icon -->
+				<a href="#home" class="move-top text-center">
+					<span class="fa fa-level-up" aria-hidden="true"></span>
+				</a>
+				<!-- //move top icon -->
+			</div>
+		</div>
+	</div>
+	<!-- //copyright bottom -->
+
+</body>
+
+</html>

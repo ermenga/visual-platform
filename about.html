@@ -4,6 +4,7 @@
 <head>
 	<title>关于我们</title>
 	<!-- Meta tag Keywords -->
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8" />
 	<meta name="keywords" content="" />
@@ -18,35 +19,7 @@
 	</script>
 	<!-- //Meta tag Keywords -->
 	<script src="js/jquery-1.8.3.min.js"></script>
-	<!-- 看板娘 -->
-	<script type="text/javascript" charset="utf-8"  src="https://files.cnblogs.com/files/liuzhou1/L2Dwidget.0.min.js"></script>
-	<script type="text/javascript" charset="utf-8"  src="https://files.cnblogs.com/files/liuzhou1/L2Dwidget.min.js"></script>
-	<script type="text/javascript">
-    	L2Dwidget.init({"display": {
-        	"superSample": 2,
-        	"width": 200,
-        	"height": 400,
-            "position": "right",
-            "hOffset": 0,
-        	"vOffset": 0
-        	}
-    	});
-	    function play_music(){
-	    	var music = document.getElementById("musicfx");//获取音乐组件
-			if(music.paused){
-				music.play();
-				music.loop = true;
-				$('#mc_play').attr('class','on');
-			}else{
-				music.pause();
-				$('#mc_play').attr('class','stop');
-			}
-		}
-	</script>
 	<style type="text/css">
-		#live2dcanvas {
-			border: 0 !important;
-		}
 		.ermenga{
 			background-image: linear-gradient( 225deg, #FFA8A8 10%, #FCFF00 100%);
 			color: transparent !important;
@@ -65,22 +38,122 @@
 		*{margin:0px;padding:0px;}
 		body{background:#000;}
 		/* music */
-		@-webkit-keyframes reverseRotataZ{
-			0%{-webkit-transform: rotateZ(0deg);}
-			100%{-webkit-transform: rotateZ(-360deg);}
+		.music {
+			height: 150px;
+			width: 300px;
+			top:25px;
+			background: url(images/music-bg.jpg);
+			background-size:100% 100%;
+			color: white;
 		}
-		@-webkit-keyframes rotataZ{
-			0%{-webkit-transform: rotateZ(0deg);}
-			100%{-webkit-transform: rotateZ(360deg);}
+		.pic_div {
+			position: relative;
 		}
-		#musicControl { position:fixed;right:10px;top:90px;margin-top:0;display:inline-block;z-index:10;}
-		#musicControl a { display:inline-block;width: 50px; height: 50px;overflow:hidden;background:url('images/mcbg.png') no-repeat;background-size:100%;}
-		#musicControl a audio{width:100%;height:56px;}
-		#musicControl a.stop { background-position:left bottom;}
-		#musicControl a.on { background-position:0px 1px;-webkit-animation: reverseRotataZ 1.2s linear infinite;}
-		#music_play_filter{width:100%;height:100%;overflow:hidden;position:fixed;top:0;left:0;z-index:9;}
+		.dot {
+			width: 15px;
+			height: 15px;
+			background: #464545;
+			position: absolute;
+			border: 2px solid white;
+			border-radius: 50%;
+			top: 67px;
+			left: 88px;
+		}
+		.disc {
+			width: 100px;
+			top:25px;
+			position: absolute;
+			right: 155px;
+			transform: rotate(30deg);
+		}
+		#music_pic {
+			width: 100px;
+			top:25px;
+			position: absolute;
+		}
+		.music_program {
+			height: 2px;
+			width: 100px;
+			background: #555;
+			position: relative;
+			top: 125px;
+		}
+		.music_program div {
+			height: 100%;
+			width: 0%;
+			background: red;
+		}
+		.time {
+			width: 100px;
+			height: 20px;
+			left: 155px;
+			position: relative;
+			top: 48px;
+			overflow: hide;
+		}
+		.time p {
+			padding-left: 30px;
+			color: white;
+		}
+		.time p span:nth-of-type(2) {
+			padding: 0 5px;
+			color: white;
+		}
+		.music_menu {
+			width: 150px;
+			height: 25px;
+			left: 167px;
+			position: relative;
+			top: 52px;
+		}
+		.music_menu span {
+			width: 30px;
+			height: 25px;
+			display: inline-block;
+			cursor: pointer;
+		}
+		.music_menu span:nth-of-type(1) {
+			margin-left: 8px;
+		}
+		.music_menu span:nth-of-type(2) {
+			margin-left: 14px;
+		}
+		.music_menu span:nth-of-type(3) {
+			margin-left: 14px;
+		}
+		.animate {
+			width: 40px;
+			height: 20px;
+			left: 170px;
+			position: relative;
+			top: 35px;
+			color: white;
+			display: inline-block;
+			white-space: nowrap;
+			animation: 5s wordsLoop linear infinite normal;
+		}
+		@keyframes wordsLoop {
+			0% {
+				transform: translateX(100%);
+				-webkit-transform: translateX(100%);
+			}
+			100% {
+				transform: translateX(-100%);
+				-webkit-transform: translateX(-100%);
+			}
+		}
+		@-webkit-keyframes wordsLoop {
+			0% {
+				transform: translateX(100%);
+				-webkit-transform: translateX(100%);
+			}
+			100% {
+				transform: translateX(-100%);
+				-webkit-transform: translateX(-100%);
+			}
+		}
 	</style>
-	<!-- //看板娘 -->
+
 	
 	<!-- Icon -->
 	<link rel="icon" href="images/logo-f.png" sizes="64x64">
@@ -94,19 +167,33 @@
 	<!-- //Custom-Files -->
 
 	<!-- Web-Fonts -->
-	<link href="http://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext"
-	 rel="stylesheet">
+	<link rel="stylesheet" href="css/fonts.googleapis.com.css">
 	<!-- //Web-Fonts -->
 </head>
 
 <body>
-	<span id="musicControl">
-		<a id="mc_play" class="on" onclick="play_music();">
-			<audio id="musicfx" loop="loop" autoplay="autoplay">
-				<source src="http://music.163.com/song/media/outer/url?id=440353010.mp3" type="audio/mpeg">
-			</audio>
-		</a>
-	</span>
+	<!-- 看板娘 -->
+	<script src="assets/jquery.min.js?v=3.3.1"></script>
+	<script src="assets/jquery-ui.min.js?v=1.12.1"></script>
+	<script src="assets/autoload.js"></script>
+	<!-- //看板娘 -->
+	<div class="container-fix" id = "fix_music" style="bottom: 5px;left: 0px;width: 300px;">
+		<audio src="" id="mymusic"></audio>
+		<div class="music" style="overflow:hidden;">
+			<div class="pic_div">
+				<img src="images/disc.png" style="pointer-events:none;" alt="" class="disc"><img src="images/default.png" alt="" id="music_pic">
+				<span class="dot" style="pointer-events:none;"></span>
+				<div class="music_program" style="pointer-events:none;">
+					<div id="prograss"></div>
+				</div>
+				<p class="animate" id="music_name"></p>
+				<div class="time" style="pointer-events:none;">
+					<p><span id="currenttime">0:00</span><span>/</span><span id="duration">0:00</span></p>
+				</div>
+				<div class="music_menu"><span class="fa fa-backward" onClick="backMusic()"></span><span id="pau" onClick="playPause()" class="fa fa-play" id="playbtn"></span><span onClick="nextMusic()" class="fa fa-forward"></span></div>
+			</div>
+		</div>
+	</div>
 	<!-- main banner  style="position:fixed;top:0;"-->
 	<div class="main-top" id="home">
 		<!-- header -->
@@ -126,7 +213,7 @@
 							<ul class="menu">
 								<li><a href="index.html">主页</a></li>
 								<li><a href="about.html" class="active"><strong>关于我们</strong></a></li>
-								<li><a href="pricing.html">空白</a></li>
+								<li><a href="tool.html">小工具</a></li>
 								<li>
 									<!-- First Tier Drop Down -->
 									<label for="drop-2" class="toggle toogle-2">导航 <span class="fa fa-angle-down" aria-hidden="true"></span>
@@ -181,7 +268,7 @@
 					<h6>我们的故事</h6>
 					<h3 class="mt-2 mb-3">第一个网站</h3>
 					<p class="text-sty-banner">&emsp;&emsp;一群秃头程序员不知为何聚集在了一起，决定开发一个能帮助大家理解算法的网站。<br />&emsp;&emsp;我们都来自大连理工大学软件学院！</p>
-					<a href="https://baike.baidu.com/item/%E5%A4%A7%E8%BF%9E%E7%90%86%E5%B7%A5%E5%A4%A7%E5%AD%A6%E8%BD%AF%E4%BB%B6%E5%AD%A6%E9%99%A2" class="btn button-style" target="_blank">了解更多</a>
+					&emsp;&emsp;<a href="https://baike.baidu.com/item/%E5%A4%A7%E8%BF%9E%E7%90%86%E5%B7%A5%E5%A4%A7%E5%AD%A6%E8%BD%AF%E4%BB%B6%E5%AD%A6%E9%99%A2" class="btn button-style" target="_blank">了解一下</a>
 				</div>
 				<div class="col-lg-7 welcome-right text-center mt-lg-0 mt-5">
 					<img src="images/dlut.jpg" width="80%" alt="糟糕，图片加载不出来了。" title="DLUT" class="img-fluid" style="margin-top: 3em;"/>
@@ -238,9 +325,9 @@
 				</div>
 				<div class="col-lg-4 col-sm-6 ab-content text-center mt-lg-0 mt-4">
 					<div class="ab-content-inner">
-						<img src="images/k2.png" alt="糟糕，图片加载不出来了。" class="img-fluid">
+						<img src="images/k3.jpg" alt="糟糕，图片加载不出来了。" class="img-fluid">
 						<div class="ab-info-con">
-							<h4 class="text-team-w3 jisi">祭司</h4>
+							<h4 class="text-team-w3 jisi">微笑fla</h4>
 							<p>算法分析</p>
 							<p>需求模拟</p>
 						</div>
@@ -251,21 +338,51 @@
 	</section>
 	<!-- //团队 -->
 
-	<!-- 合作伙伴 -->
+	<!-- 内容参考 -->
 	<section class="partners py-5" id="partners">
 		<div class="container py-xl-5 py-lg-3">
-			<h3 class="tittle text-center font-weight-bold">合作伙伴</h3><br /><br />
-			<div style="width:100%;text-align:center;">
-				<div><!-- <div class="col-md-2 col-4"> -->
+			<h3 class="tittle text-center font-weight-bold">内容参考</h3>
+			<div style="width:100%;text-align:center;margin: 6em 0em 12em 0em;">
+				<div style="position: absolute;left: 20%;width: 10%;">
 					<div class="parts-w3ls">
-						<a href="contact.html"><span class="fa fa-angellist"></span></a>
-						<h4>欢迎加入</h4>
+						<a href="https://fontawesome.dashgame.com/" target="view_window"><span class="fa fa-flag"></span></a>
+						<h4>Font Awesome</h4>
+					</div>
+				</div>
+				<div style="position: absolute;left: 30%;width: 10%;">
+					<div class="parts-w3ls">
+						<a href="https://www.mathjax.org/" target="view_window"><img src="images/mathjax.ico" /></a>
+						<h4>MathJax</h4>
+					</div>
+				</div>
+				<div style="position: absolute;left: 40%;width: 10%;">
+					<div class="parts-w3ls">
+						<a href="https://www.fghrsh.net/post/123.html" target="view_window"><img src="images/live2d.png" width="48px"/></a>
+						<h4>Live2D</h4>
+					</div>
+				</div>
+				<div style="position: absolute;left: 50%;width: 10%;">
+					<div class="parts-w3ls">
+						<a href="https://zh.numberempire.com/" target="view_window"><img src="images/pi-ball.png" width="48px"/></a>
+						<h4>数字帝国</h4>
+					</div>
+				</div>
+				<div style="position: absolute;left: 60%;width: 10%;">
+					<div class="parts-w3ls">
+						<a href="http://www.turingapi.com/" target="view_window"><img src="images/turing.png" height="48px" /></a>
+						<h4>图灵机器人</h4>
+					</div>
+				</div>
+				<div style="position: absolute;left: 70%;width: 10%;">
+					<div class="parts-w3ls">
+						<a href="https://blog.csdn.net/weixin_39141044/article/details/83013416" target="view_window"><img src="images/csdn.ico" height="48px" /></a>
+						<h4>Canvas绘图基础</h4>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- //合作伙伴 -->
+	<!-- //内容参考 -->
 
 	<!-- footer -->
 	<footer class="bg-li py-5">
@@ -276,8 +393,8 @@
 					<span class="fa fa-envelope"></span>
 				</div>
 				<h2 class="tittle text-center font-weight-bold">持续更新中!</h2>
-				<p class="sub-tittle text-center mt-3 mb-sm-5 mb-4">更多的教学辅助工具正在不断筹备中<br />请耐心等待...</p>
-				<form action="succeed.html" method="post" class="subscribe-wthree pt-2">
+				<p class="sub-tittle text-center mt-3 mb-sm-5 mb-4">更多的可视化板块正在不断筹备中<br />请耐心等待...</p>
+				<form action="succeed.html" method="" class="subscribe-wthree pt-2">
 					<div class="d-flex subscribe-wthree-field">
 						<input class="form-control" type="email" placeholder="输入你的邮箱..." name="email" required="">
 						<button class="btn form-control w-50" type="submit">订阅</button>
@@ -310,7 +427,112 @@
 		</div>
 	</div>
 	<!-- //copyright bottom -->
-
+	<script type="text/javascript">
+	var music=document.getElementById("mymusic");
+	var prograss=document.getElementById("prograss");
+	var curtxt=document.getElementById("currenttime");
+	var duration=document.getElementById("duration");
+	var music_pic=document.getElementById("music_pic");
+	var deg=0;//旋转角度
+	var disctimer,prograsstimer;//碟片计时器,进度条计时器
+	var musicindex=0;//音乐索引
+	var musics=new Array("440353010.mp3","437909145.mp3","31010566.mp3","1330348068.mp3","505449407.mp3","2698075.mp3","4209157.mp3","1328047738.mp3");//音乐数组
+	var music_pics=new Array("http://p2.music.126.net/znZQMUXniXqwjJrXMJO_Qg==/109951163100026676.jpg","http://p2.music.126.net/uVgFabWFqhprOAA-bsfJ9A==/18795051766390200.jpg","http://p2.music.126.net/UR8jAfqus_o1j_QkaYkZ_g==/109951163664241365.jpg","http://p2.music.126.net/diGAyEmpymX8G7JcnElncQ==/109951163699673355.jpg","http://p1.music.126.net/ejBqv__hHneHWQnMd1x00A==/18338754440252475.jpg","http://p2.music.126.net/YH6nJglutuszMIqpNL8wwQ==/18265087161186511.jpg","http://p2.music.126.net/TK4eehKaatnOgvkUFW8AkQ==/1743825441666319.jpg","http://p1.music.126.net/-8DMwO-O-93cZ1D8CQ-mIw==/109951163699364002.jpg");
+	var names=new Array("#Lov3 #Ngẫu Hứng","By Your Side","Sold Out","起风了","Friendships (Original Mix)","Ce Frumoasa E Iubirea","She Is My Sin","Different World");
+	var disc=document.getElementsByClassName('disc');
+	function curtime(txt,misic)//音乐时间显示
+	{
+		if(music.currentTime<10) {
+			txt.innerHTML="0:0"+ Math.floor(music.currentTime);
+		}else if(music.currentTime<60) {
+			txt.innerHTML="0:"+ Math.floor(music.currentTime);
+		} else {
+			var minet=parseInt(music.currentTime/60);
+			var sec=music.currentTime-minet*60;
+			if(sec<10) {
+				txt.innerHTML="0"+minet+":"+"0"+parseInt(sec);
+			} else {
+				txt.innerHTML="0"+minet+":"+parseInt(sec);
+			}
+		}
+	}
+	//播放暂停
+	function playPause()
+	{
+		var btn=document.getElementById("playbtn");
+		if(music.paused)
+		{
+			music.play();
+			clearInterval(disctimer);//清除碟片的定时器
+			document.getElementById('pau').className = 'fa fa-pause';//改变播放暂停键的图标
+			disctimer=setInterval(function(){
+				disc[0].style.transform="rotate("+deg+"deg)";
+				deg+=5;
+				//每秒设置进度条长度
+			},100);
+			prograsstimer=setInterval(function(){
+				prograss.style.width=(music.currentTime)*100 / (music.duration)+"%";
+				curtime(curtxt,music);
+				if(music.currentTime >= music.duration-1)//片尾跳转下一曲
+				{
+					musicindex++;//音乐索引加一
+					if(musicindex>=musics.length)//如果音乐索引超过长度，将音乐索引清零
+					{
+						musicindex=0;
+					}
+					getMusic();
+					music.play();//重载音乐后进行播放
+				}
+			},1000);
+		} else {
+			music.pause();//停止音乐
+			document.getElementById('pau').className = 'fa fa-play';//改变图标
+			clearInterval(disctimer);//清除碟片滚动的定时器
+			clearInterval(prograsstimer);//清除进度条的定时器
+		}
+	}
+	//下一曲
+	function nextMusic()
+	{
+		musicindex++;//音乐索引加一
+		if(musicindex>=musics.length)//如果音乐索引超过长度，将音乐索引清零
+		{
+			musicindex=0;
+		}
+		getMusic();
+		music.play();
+		document.getElementById('pau').className = 'fa fa-pause';//改变播放暂停键的图标
+		document.getElementById('music_name').innerHTML = names[musicindex];
+	}
+	//上一曲
+	function backMusic()
+	{
+		musicindex--;
+		if(musicindex<0)//如果索引小于0，将索引变为最大值
+		{
+			musicindex=musics.length-1;
+		}
+		getMusic();
+		music.play();
+		document.getElementById('pau').className = 'fa fa-pause';//改变播放暂停键的图标
+		document.getElementById('music_name').innerHTML = names[musicindex];
+	}
+	//读取音乐
+	function getMusic()
+	{
+		music.src="http://music.163.com/song/media/outer/url?id="+musics[musicindex];//改变音乐的SRC
+		music_pic.src=music_pics[musicindex];
+		document.getElementById('music_name').innerHTML = names[musicindex];
+		if(music.readyState="complete") {
+			setTimeout(function(){
+			duration.innerHTML=parseInt(music.duration/60)+":"+parseInt(music.duration%60);
+			},1000);//一秒后读取音乐的总时长
+		}
+	}
+	window.onload=function(){
+		getMusic();
+	}
+</script>
 </body>
 
 </html>
